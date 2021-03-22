@@ -1,0 +1,148 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-android-extensions'
+    id 'kotlin-kapt'
+}
+
+android {
+
+    compileSdkVersion rootProject.compileSdkVersion
+    buildToolsVersion rootProject.buildToolVersion
+
+    defaultConfig {
+        applicationId "com.jcy.yanado"
+        minSdkVersion rootProject.minSdkVersion
+        targetSdkVersion rootProject.targetSdkVersion
+        versionCode rootProject.versionCode
+        versionName rootProject.versionName
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        testOptions {
+            unitTests {
+                returnDefaultValues = true
+                includeAndroidResources = true
+            }
+
+            animationsDisabled = true
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    flavorDimensions "yanado"
+    productFlavors {
+        dev {
+            dimension "yanado"
+            applicationIdSuffix ".dev"
+            versionNameSuffix "-dev"
+            resValue "string", "app_name", rootProject.appNameDev
+            buildConfigField "String", "API_URL", rootProject.apiUrlDev
+
+        }
+
+        stage {
+            dimension "yanado"
+            applicationIdSuffix ".stage"
+            versionNameSuffix "-stage"
+            resValue "string", "app_name", rootProject.appNameStage
+            buildConfigField "String", "API_URL", rootProject.apiUrlStage
+        }
+
+        real {
+            dimension "yanado"
+            resValue "string", "app_name", rootProject.appName
+            buildConfigField "String", "API_URL", rootProject.apiUrl
+        }
+    }
+
+    android.variantFilter { variant ->
+        if (variant.buildType.name == 'release' && (variant.getFlavors().get(0).name == 'dev' || variant.getFlavors().get(0).name == 'stage')
+                || (variant.buildType.name == 'debug' && variant.getFlavors().get(0).name == 'real')) {
+            variant.setIgnore(true)
+        }
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = rootProject.jvmTargetVersion
+    }
+
+    buildFeatures {
+        dataBinding true
+    }
+}
+
+dependencies {
+
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation project(':base')
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
+    implementation "androidx.core:core-ktx:$ktxVersion"
+    implementation "androidx.appcompat:appcompat:$appcompatVersion"
+    implementation "com.google.android.material:material:$materialVersion"
+
+    // androidx
+    implementation "androidx.constraintlayout:constraintlayout:$constraintLayoutVersion"
+    implementation "androidx.cardview:cardview:$cardviewVersion"
+    implementation "androidx.coordinatorlayout:coordinatorlayout:$coordinatorVersion"
+
+    //recycler view
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
+
+    // RxJava2
+    implementation "io.reactivex.rxjava2:rxandroid:$rxAndroidVersion"
+
+    // OKHttp3 + Retrofit2
+    implementation "com.squareup.okhttp3:logging-interceptor:$okhttpVersion"
+    implementation "com.squareup.okhttp3:okhttp:$okhttpVersion"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
+    implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
+
+    // Glide
+    implementation "com.github.bumptech.glide:glide:$glideVersion"
+
+    // Koin - Kotlin Injection
+    implementation "org.koin:koin-android:$koinAndroidVersion"
+    implementation "org.koin:koin-android-viewmodel:$koinAndroidVersion"
+
+    // Gson
+    implementation "com.google.code.gson:gson:$gsonVersion"
+
+    // SecurePreference
+    implementation "com.scottyab:secure-preferences-lib:$securePreferenceVersion"
+
+    //permission
+    implementation "gun0912.ted:tedpermission-rx2:$tedPermission"
+
+    //Android Version Info Api Caller
+    implementation "org.jsoup:jsoup:$jsoupVersion"
+
+    //stetho
+    implementation "com.facebook.stetho:stetho:$stethoVersion"
+    implementation "com.facebook.stetho:stetho-okhttp3:$stethoVersion"
+
+    testImplementation "junit:junit:$junitVersion"
+
+    testImplementation "org.koin:koin-test:$koinAndroidVersion"
+
+    testImplementation "org.robolectric:robolectric:$robolectricVersion"
+    testImplementation "androidx.test:core:$testCoreVersion"
+    androidTestImplementation "androidx.test.ext:junit:$junitTestVersion"
+}
