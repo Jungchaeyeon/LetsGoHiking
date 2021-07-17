@@ -1,4 +1,3 @@
-# TrashClassification
+# Let's go hiking
 
-Yanado final Project
 MVVM -retrofit2, databinding, liveddata, koin , kotlin
