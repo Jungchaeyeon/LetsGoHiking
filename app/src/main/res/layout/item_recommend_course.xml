@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        app:cardCornerRadius="10dp"
+
+        app:cardPreventCornerOverlap="false">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/mntn_img"
+                android:layout_width="match_parent"
+                android:layout_height="130dp"
+                android:scaleType="center"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/mntn_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/recommend_mntn_title_bg_30"
+                android:fontFamily="@font/gaegu_bold"
+                android:padding="10dp"
+                android:textSize="23sp"
+                app:layout_constraintBottom_toBottomOf="@id/mntn_img"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:text="한라산" />
+
+            <TextView
+                android:id="@+id/mntn_location_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/gaegu_regular"
+                android:text="@string/location"
+                android:textSize="23sp"
+                app:layout_constraintEnd_toStartOf="@id/mntn_location"
+                app:layout_constraintHorizontal_chainStyle="spread_inside"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/mntn_img" />
+
+            <TextView
+                android:id="@+id/mntn_location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="24dp"
+                android:fontFamily="@font/gaegu_bold"
+                android:textSize="23sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/mntn_location_title"
+                app:layout_constraintTop_toBottomOf="@id/mntn_img"
+                tools:text="전주" />
+
+            <TextView
+                android:id="@+id/mntn_height_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:fontFamily="@font/gaegu_regular"
+                android:text="@string/height"
+                android:textSize="23sp"
+                app:layout_constraintStart_toStartOf="@id/mntn_location_title"
+                app:layout_constraintTop_toBottomOf="@id/mntn_location_title" />
+
+            <TextView
+                android:id="@+id/mntn_height"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="24dp"
+                android:fontFamily="@font/gaegu_bold"
+                android:textSize="23sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/mntn_location"
+                tools:text="1,230m" />
+
+            <TextView
+                android:id="@+id/mntn_subinfo_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="10dp"
+                android:fontFamily="@font/gaegu_regular"
+                android:text="@string/info"
+                android:textSize="23sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@id/mntn_location_title"
+                app:layout_constraintTop_toBottomOf="@id/mntn_height_title" />
+
+            <TextView
+                android:id="@+id/mntn_subinfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginBottom="10dp"
+                android:ellipsize="end"
+                android:fontFamily="@font/gaegu_bold"
+                android:lines="1"
+                android:maxEms="10"
+                android:textSize="23sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/mntn_height"
+                tools:text="강원도 정선군 정선읍 회동리, 강원도 평창군 진부면, 북평면" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+</layout>

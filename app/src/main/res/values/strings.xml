@@ -1,4 +1,14 @@
 <resources>
-
-    <string name="Apptitle">MORE TRIP</string>
+    <string name="_app_name">이번주 등산고?</string>
+    <string name="kakao_btn_start">카카오로 간단하게 시작하기</string>
+    <string name="google_btn_start">구글로 간단하게 시작하기</string>
+    <string name="Apptitle">이번주 등산고?</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="search_korea_mountain">국내 산 검색</string>
+    <string name="tab_recommend_course">코스 추천</string>
+    <string name="tab_difficulty_course">난이도별 코스</string>
+    <string name="location">지역</string>
+    <string name="height">높이</string>
+    <string name="info">소개</string>
 </resources>
