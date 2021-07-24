@@ -28,15 +28,18 @@
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottomNavBar"
-            app:menu="@menu/bottom_nav_menu"
-            app:labelVisibilityMode="unlabeled"
-            android:background="@color/white"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:background="@drawable/bottom_navi_bar_bg"
+            app:itemIconTint="@color/bottom_navi_icon_selector_color"
+            app:itemTextColor="@color/bottom_navi_icon_selector_color"
+            app:labelVisibilityMode="unlabeled"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/container" />
+            app:layout_constraintTop_toBottomOf="@id/container"
+            app:menu="@menu/bottom_nav_menu" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

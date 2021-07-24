@@ -125,7 +125,9 @@ dependencies {
     // Koin - Kotlin Injection
     implementation "org.koin:koin-android:$koinAndroidVersion"
     implementation "org.koin:koin-android-viewmodel:$koinAndroidVersion"
-
+    implementation "org.koin:koin-core-ext:$koinAndroidVersion"
+    implementation "org.koin:koin-android-ext:$koinAndroidVersion"
+    implementation "org.koin:koin-android-scope:$koinAndroidVersion"
     // Gson
     implementation "com.google.code.gson:gson:$gsonVersion"
 

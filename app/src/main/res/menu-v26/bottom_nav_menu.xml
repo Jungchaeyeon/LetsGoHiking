@@ -18,14 +18,9 @@
         android:icon="@drawable/ic_bookmark"
         tools:ignore="HardcodedText" />
     <item
-        android:id="@+id/menu_like"
-        android:title="like"
-        android:icon="@drawable/ic_like"
-        tools:ignore="HardcodedText" />
-    <item
         android:id="@+id/menu_profile"
         android:title="profile"
-        android:icon="@drawable/ic_profile"
+        android:icon="@drawable/ic_user"
         tools:ignore="HardcodedText" />
 
 </menu>

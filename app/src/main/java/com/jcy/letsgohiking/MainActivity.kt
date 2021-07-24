@@ -50,10 +50,6 @@ class MainActivity : BaseDataBindingActivity<ActivityMainBinding>(R.layout.activ
                 bookmarkFragment = BookmarkFragment.getInstance()
                 changeFragment(bookmarkFragment)
             }
-            R.id.menu_like->{
-                likeFragment = LikeFragment.getInstance()
-                changeFragment(likeFragment)
-            }
             R.id.menu_profile->{
                 profileFragment = ProfileFragment.getInstance()
                 changeFragment(profileFragment)

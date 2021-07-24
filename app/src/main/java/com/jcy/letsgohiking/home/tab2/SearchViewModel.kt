@@ -1,15 +1,12 @@
 package com.jcy.letsgohiking.home.tab2
 
-import android.os.Bundle
-import android.os.Handler
-import android.view.View
-import android.widget.Toast
-import androidx.recyclerview.widget.GridLayoutManager
-import com.hdh.base.fragment.BaseDataBindingFragment
+import android.app.Activity
+import androidx.lifecycle.MutableLiveData
+import com.hdh.base.viewmodel.BaseViewModel
+import com.jcy.letsgohiking.MyApplication.Companion.getString
 import com.jcy.letsgohiking.R
-import com.jcy.letsgohiking.databinding.FragmentRecommendCourseBinding
+import com.jcy.letsgohiking.repository.ApiRepository
 import com.jcy.letsgohiking.util.Log
-import org.koin.android.viewmodel.ext.android.sharedViewModel
 import org.w3c.dom.Document
 import org.w3c.dom.Element
 import org.w3c.dom.Node
@@ -19,48 +16,25 @@ import javax.xml.parsers.DocumentBuilder
 import javax.xml.parsers.DocumentBuilderFactory
 import javax.xml.parsers.ParserConfigurationException
 
-class RecommendCourseFragment: BaseDataBindingFragment<FragmentRecommendCourseBinding> (R.layout.fragment_recommend_course) {
+class SearchViewModel(): BaseViewModel(){
 
+    val liveKeyword = MutableLiveData<String>()
+    val mountainList = MutableLiveData<ArrayList<MountainItem>>()
+    var mountainArray = ArrayList<MountainItem>()
 
-    private lateinit var adapter : MountainAdapter
-    private val viewModel:SearchViewModel by sharedViewModel()
-    private var isSearchResult = false
-
-    override fun FragmentRecommendCourseBinding.onBind() {
-        vm = viewModel
-
-        adapter = MountainAdapter()
-        viewModel.bindLifecycle(requireActivity())
-        binding.lv.layoutManager = GridLayoutManager(requireActivity(),2)
-        binding.lv.adapter =adapter
+    fun addItem(item: MountainItem) {
+        mountainArray.add(item)
+        mountainList.postValue(mountainArray)
     }
-
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        if(!isSearchResult) {
-
-            val url = "http://openapi.forest.go.kr/openapi/service/trailInfoService/getforeststoryservice?&numOfRows=100&ServiceKey=" + getString(R.string.getMountains_client_id)
-            getMountains(url)
-        }
+    fun removeAllItems() {
+        mountainArray.clear()
+        mountainList.postValue(mountainArray)
     }
-     fun nextStepSearch(isSuccess: Boolean, mountainList: ArrayList<MountainItem>){
-        if(isSuccess){
-            Log.d("isSuccess", mountainList.toString())
-            if(isAdded) {
+    fun onClickSearch(activity: Activity,keyword: String, response: (success: Boolean) -> Unit){
 
-                    adapter.submitList(mountainList.orEmpty())
-                    adapter.notifyDataSetChanged()
-
-                }
-
-
-            //todo 검색 페이지 띄우기
-        }else{
-            Toast.makeText(requireContext(), "정보를 불러오는 데 실패했습니다.", Toast.LENGTH_SHORT).show()
-        }
-    }
-    private fun getMountains(url: String){
+        removeAllItems()
+        val url = "http://openapi.forest.go.kr/openapi/service/trailInfoService/getforeststoryservice?mntnNm=${keyword}&ServiceKey=" + getString(
+            R.string.getMountains_client_id)
         Thread{
             val dbFactory = DocumentBuilderFactory.newInstance()
             var dBuilder: DocumentBuilder? = null
@@ -75,6 +49,7 @@ class RecommendCourseFragment: BaseDataBindingFragment<FragmentRecommendCourseBi
                 doc = dBuilder?.parse(url)
             }catch (e : IOException){
                 e.printStackTrace()
+                response.invoke(false)
             }
 
             doc?.documentElement?.normalize()
@@ -85,7 +60,7 @@ class RecommendCourseFragment: BaseDataBindingFragment<FragmentRecommendCourseBi
                 val itemList : NodeList = doc.getElementsByTagName("item")
 
                 for(i in 0..itemList.length){
-                    val nNode :Node?= itemList.item(i)
+                    val nNode : Node?= itemList.item(i)
 
                     if(nNode?.nodeType== Node.ELEMENT_NODE){
 
@@ -102,32 +77,23 @@ class RecommendCourseFragment: BaseDataBindingFragment<FragmentRecommendCourseBi
                             mountain.mntnHeight = mountainHeight.toInt()
                             mountain.mntnLocation = getTagValue("mntninfopoflc",eElement)
                             mountain.mntnInfo = getTagValue("mntnsbttlinfo",eElement)
-                            //Log.e("info정보",mountain.mntnInfo.toString())
                             mountain.mntnImg = mountainImgUrl
-
-                            viewModel.addItem(mountain)
+                            mountainArray.add(mountain)
+                            Log.e("info정보",mountainArray.toString())
+                            //addItem(mountain)
                         }
                     }
                 }
-                requireActivity().runOnUiThread {
-                    adapter.submitList(viewModel.mountainList.value)
+                activity.runOnUiThread(){
+                    response.invoke(true)
                 }
-
                 return@Thread
             }
         }.start()
     }
-
-
     private fun getTagValue( tag: String, eElement : Element): String {
-         val nList = eElement.getElementsByTagName(tag).item(0).childNodes
+        val nList = eElement.getElementsByTagName(tag).item(0).childNodes
         val nValue = nList.item(0) as Node
         return nValue.nodeValue
     }
-
-    companion object {
-        fun getInstance() = RecommendCourseFragment()
-    }
 }
-
-

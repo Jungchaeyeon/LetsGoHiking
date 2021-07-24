@@ -32,6 +32,7 @@ buildscript {
         roomVersion ='2.3.0'
 
         koinAndroidVersion = '2.1.5'
+
         gsonVersion = '2.8.5'
         securePreferenceVersion = '0.1.4'
         tedPermission = '2.2.2'

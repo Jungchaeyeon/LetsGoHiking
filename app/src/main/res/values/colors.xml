@@ -9,6 +9,10 @@
     <color name="white">#FFFFFFFF</color>
     <color name="kakao_yellow">#fee500</color>
     <color name="gray_f7">#f7f7f7</color>
+    <color name="gray_A5">#A5A5A5</color>
     <color name="gray_70">#707070</color>
-    <color name="gray_20_70">#20707070</color>
+    <color name="gray_90_70">#90707070</color>
+    <color name="main_green">#006117</color>
+    <color name="btn_green">#74FF2A</color>
+
 </resources>

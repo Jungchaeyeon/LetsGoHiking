@@ -8,12 +8,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.jcy.letsgohiking.databinding.ItemRecommendCourseBinding
 
+
 class MountainAdapter: ListAdapter<MountainItem, MountainAdapter.ItemViewHolder>(diffUtil) {
     inner class ItemViewHolder(val binding: ItemRecommendCourseBinding): RecyclerView.ViewHolder(binding.root){
         fun bind(mountainItem: MountainItem){
 
             binding.mntnName.text = mountainItem.mntnName
             binding.mntnHeight.text = mountainItem.mntnHeight.toString()
+            binding.mntnSubinfo.text = mountainItem.mntnInfo
             binding.mntnLocation.text = mountainItem.mntnLocation
 
             Glide.with(binding.mntnImg.context)
@@ -31,6 +33,7 @@ class MountainAdapter: ListAdapter<MountainItem, MountainAdapter.ItemViewHolder>
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         holder.bind(currentList[position])
     }
+
     companion object{
         val diffUtil=  object : DiffUtil.ItemCallback<MountainItem>() {
             override fun areItemsTheSame(oldItem: MountainItem, newItem: MountainItem): Boolean {

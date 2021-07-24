@@ -1,5 +1,9 @@
 package com.jcy.letsgohiking.ext
 
+import android.content.Context
+import android.view.View
+import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
 import android.widget.Toast
 import com.jcy.letsgohiking.MyApplication
 import io.reactivex.Single

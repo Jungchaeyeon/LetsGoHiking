@@ -11,4 +11,5 @@
     <string name="location">지역</string>
     <string name="height">높이</string>
     <string name="info">소개</string>
+    <string name="search">검색</string>
 </resources>
