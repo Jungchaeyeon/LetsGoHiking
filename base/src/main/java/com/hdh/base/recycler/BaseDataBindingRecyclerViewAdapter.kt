@@ -1,5 +1,6 @@
 package com.hdh.base.recycler
 
+import android.util.Log
 import android.view.ViewGroup
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.DiffUtil
@@ -72,6 +73,8 @@ class BaseDataBindingRecyclerViewAdapter<T : Any>
             position: Int
     ) {
         holder.bindData(items[position])
+        holder.itemView.setOnClickListener{ Log.e("clickTest", "아이템 클릭 확인. position : ${holder.adapterPosition}") }
+
     }
 
 

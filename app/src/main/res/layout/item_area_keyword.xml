@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="vi"
+            type="com.jcy.letsgohiking.home.tab2.RecommendCourseFragment" />
+        <variable
+            name="item"
+            type="com.jcy.letsgohiking.home.tab2.model.Area" />
+
+        <variable name="isSelected" type="boolean" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/recycle_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="8dp"
+            android:layout_marginVertical="3dp"
+            android:background="@drawable/area_button_selector"
+            android:fontFamily="@font/gaegu_regular"
+            android:gravity="center_horizontal"
+            android:letterSpacing="-0.03"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            android:paddingTop="8dp"
+            android:includeFontPadding="false"
+            android:paddingHorizontal="10dp"
+            android:text="@{item.area}"
+            android:textColor="#222222"
+            android:textSize="16sp"
+            tools:text="서울특별시"
+            android:textStyle="normal"
+            android:onClick="@{(view)->vi.onClickItem(view,item.area.toString())}"/>
+
+    </LinearLayout>
+</layout>

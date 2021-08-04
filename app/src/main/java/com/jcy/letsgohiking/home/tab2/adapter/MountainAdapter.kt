@@ -1,4 +1,4 @@
-package com.jcy.letsgohiking.home.tab2
+package com.jcy.letsgohiking.home.tab2.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -7,9 +7,12 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.jcy.letsgohiking.databinding.ItemRecommendCourseBinding
+import com.jcy.letsgohiking.home.tab2.MountainItem
 
 
-class MountainAdapter: ListAdapter<MountainItem, MountainAdapter.ItemViewHolder>(diffUtil) {
+class MountainAdapter(val callback:(MountainItem)->Unit): ListAdapter<MountainItem, MountainAdapter.ItemViewHolder>(
+    diffUtil
+) {
     inner class ItemViewHolder(val binding: ItemRecommendCourseBinding): RecyclerView.ViewHolder(binding.root){
         fun bind(mountainItem: MountainItem){
 
@@ -22,6 +25,9 @@ class MountainAdapter: ListAdapter<MountainItem, MountainAdapter.ItemViewHolder>
                 .load(mountainItem.mntnImg)
                 .into(binding.mntnImg)
 
+            binding.root.setOnClickListener {
+                callback(mountainItem)
+            }
         }
     }
 

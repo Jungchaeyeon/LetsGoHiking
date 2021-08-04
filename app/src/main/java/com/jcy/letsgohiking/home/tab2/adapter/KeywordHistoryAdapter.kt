@@ -1,4 +1,4 @@
-package com.jcy.letsgohiking.home.tab2
+package com.jcy.letsgohiking.home.tab2.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,9 +6,11 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.jcy.letsgohiking.databinding.ItemKeywordHistoryBinding
-import com.jcy.letsgohiking.home.tab2.MountainAdapter.Companion.diffUtil
+import com.jcy.letsgohiking.home.tab2.History
 
-class KeywordHistoryAdapter(val historyDeleteClickedListener:(String)->Unit): ListAdapter<History, KeywordHistoryAdapter.HistoryItemViewHolder>(diffUtil) {
+class KeywordHistoryAdapter(val historyDeleteClickedListener:(String)->Unit): ListAdapter<History, KeywordHistoryAdapter.HistoryItemViewHolder>(
+    diffUtil
+) {
     inner class HistoryItemViewHolder(val binding: ItemKeywordHistoryBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind( history: History){
             binding.keyword.text = history.mntnName

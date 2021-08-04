@@ -4,6 +4,8 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import androidx.fragment.app.Fragment
+import com.jcy.letsgohiking.home.tab2.DetailMountainInfoActivity
+import com.jcy.letsgohiking.home.tab2.MountainItem
 import java.util.*
 
 /**
@@ -25,7 +27,7 @@ class ActivityNavigator private constructor(private val context: Context) {
     val stack: ArrayList<Intent> = ArrayList()
 
     fun main(isClear: Boolean = true) = MyIntent(MainActivity::class.java, isClear)
-
+    fun todetailmountainpage(mntnModel: MountainItem) = MyIntent(DetailMountainInfoActivity::class.java).apply { putExtra(KEY_DATA,mntnModel) }
 
 
 

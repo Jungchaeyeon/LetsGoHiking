@@ -5,4 +5,5 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 class ApiRepository(
     private val apiTest: Api
 ) {
+
 }

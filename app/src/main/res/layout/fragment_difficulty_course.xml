@@ -1,14 +1,153 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto">
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:text="textViewDifficulty"/>
-</androidx.constraintlayout.widget.ConstraintLayout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="vm"
+            type="com.jcy.letsgohiking.home.tab2.SearchViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:descendantFocusability="blocksDescendants">
+
+                <ImageView
+                    android:id="@+id/mountainLogo"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginStart="16dp"
+                    android:src="@drawable/ic_mountains_color"
+                    app:layout_constraintEnd_toStartOf="@id/hikingCourseByDifficultyTitle"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/hikingCourseByDifficultyTitle" />
+
+                <TextView
+                    android:id="@+id/hikingCourseByDifficultyTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="6dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/title_bg_green"
+                    android:fontFamily="@font/gaegu_bold"
+                    android:text="등린이 코스"
+                    android:textColor="#333333"
+                    android:textSize="24sp"
+                    app:layout_constraintStart_toEndOf="@id/mountainLogo"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/hikingByDifficulty0to500"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:nestedScrollingEnabled="false"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/hikingCourseByDifficultyTitle" />
+
+                <ImageView
+                    android:id="@+id/mountainLogo2"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginStart="16dp"
+                    android:src="@drawable/ic_mountains_color"
+                    app:layout_constraintEnd_toStartOf="@id/hikingCourseByDifficultyTitle"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/hikingCourseByDifficultyTitle2" />
+
+                <TextView
+                    android:id="@+id/hikingCourseByDifficultyTitle2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="6dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/title_bg_green"
+                    android:fontFamily="@font/gaegu_bold"
+                    android:text="등산러 코스"
+                    android:textColor="#333333"
+                    android:textSize="24sp"
+                    app:layout_constraintTop_toBottomOf="@id/hikingByDifficulty0to500"
+                    app:layout_constraintStart_toEndOf="@id/mountainLogo"
+                   />
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/hikingByDifficulty500to1000"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:nestedScrollingEnabled="false"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/hikingCourseByDifficultyTitle2" />
+                <ImageView
+                    android:id="@+id/mountainLogo3"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginStart="16dp"
+                    android:src="@drawable/ic_mountains_color"
+                    app:layout_constraintEnd_toStartOf="@id/hikingCourseByDifficultyTitle"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/hikingCourseByDifficultyTitle3" />
+
+                <TextView
+                    android:id="@+id/hikingCourseByDifficultyTitle3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="6dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/title_bg_green"
+                    android:fontFamily="@font/gaegu_bold"
+                    android:text="프로 등산러 코스"
+                    android:textColor="#333333"
+                    android:textSize="24sp"
+                    app:layout_constraintStart_toEndOf="@id/mountainLogo"
+                    app:layout_constraintTop_toBottomOf="@id/hikingByDifficulty500to1000"/>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/hikingByDifficulty1000to1500"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:nestedScrollingEnabled="false"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/hikingCourseByDifficultyTitle3" />
+                <LinearLayout
+                    android:id="@+id/progressBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent">
+                    <ProgressBar
+                        style="?android:attr/progressBarStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:visibility="visible"
+                        android:indeterminateTint="@color/main_green"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/main_green"
+                        android:text="로딩중..."/>
+                </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.core.widget.NestedScrollView>
+    </LinearLayout>
 </layout>

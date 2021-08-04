@@ -63,6 +63,7 @@ class MainActivity : BaseDataBindingActivity<ActivityMainBinding>(R.layout.activ
             .beginTransaction()
             .replace(R.id.container, fragment)
             .commit()
+
     }
     companion object {
         fun getInstance() = MainActivity()

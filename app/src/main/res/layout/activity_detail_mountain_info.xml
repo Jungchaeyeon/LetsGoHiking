@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="vm"
+            type="com.jcy.letsgohiking.home.tab2.model.DetailMountainViewModel" />
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:context=".home.tab2.DetailMountainInfoActivity">
+
+                <androidx.constraintlayout.widget.Group
+                    android:id="@+id/mntnHikingPointViewGroup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    app:constraint_referenced_ids="mntnHikingPoint, mntnHikingPointValue"
+                    tools:visibility="visible" />
+
+                <androidx.constraintlayout.widget.Group
+                    android:id="@+id/mntnTop100ReasonViewGroup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    app:constraint_referenced_ids="mntnTop100Reason, mntnTop100ReasonValue"
+                    tools:visibility="visible" />
+
+                <TextView
+                    android:id="@+id/mntnName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/title_bg_green"
+                    android:fontFamily="@font/gaegu_bold"
+                    android:text="@{vm.liveMountainItem.mntnName}"
+                    android:textColor="@color/black"
+                    android:textSize="25sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="산 이름" />
+
+<!--                <ImageView-->
+<!--                    android:id="@+id/mntnImageView"-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="200dp"-->
+<!--                    android:layout_marginTop="16dp"-->
+<!--                    android:background="@color/purple_200"-->
+<!--                    android:scaleType="centerCrop"-->
+<!--                    app:layout_constraintDimensionRatio="1:1"-->
+<!--                    app:layout_constraintEnd_toEndOf="parent"-->
+<!--                    app:layout_constraintStart_toStartOf="parent"-->
+<!--                    app:layout_constraintTop_toBottomOf="@id/mntnName" />-->
+
+                <ImageView
+                    android:id="@+id/mntnLogoHeight"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginBottom="4dp"
+                    android:src="@drawable/ic_mountains"
+                    app:layout_constraintBottom_toBottomOf="@id/mntnHeightTitle"
+                    app:layout_constraintEnd_toStartOf="@id/mntnHeightTitle"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/mntnHeightTitle" />
+
+                <TextView
+                    android:id="@+id/mntnHeightTitle"
+                    style="@style/mountainInfoTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="16dp"
+                    android:includeFontPadding="false"
+                    android:text="산 높이"
+                    app:layout_constraintStart_toEndOf="@id/mntnLogoHeight"
+                    app:layout_constraintTop_toBottomOf="@id/mntnName" />
+
+                <TextView
+                    android:id="@+id/mntnHeightValue"
+                    style="@style/mountainInfoContent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:paddingStart="20dp"
+                    android:text="@{String.valueOf(vm.liveMountainItem.mntnHeight)}"
+                    app:layout_constraintStart_toStartOf="@id/mntnHeightTitle"
+                    app:layout_constraintTop_toBottomOf="@id/mntnHeightTitle"
+                    tools:text="1230m" />
+
+                <TextView
+                    android:id="@+id/mntnHikingPoint"
+                    style="@style/mountainInfoTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/hiking_point"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/mntnHeightValue" />
+
+                <TextView
+                    android:id="@+id/mntnHikingPointValue"
+                    style="@style/mountainInfoContent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:includeFontPadding="false"
+                    android:text="@{vm.liveMountainItem.courseInfo}"
+                    app:layout_constraintStart_toStartOf="@id/mntnHikingPoint"
+                    app:layout_constraintTop_toBottomOf="@id/mntnHikingPoint"
+                    tools:text="청량동-청량사-남산제일봉 -단지봉-큰재" />
+
+                <TextView
+                    android:id="@+id/mntnTop100Reason"
+                    style="@style/mountainInfoTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="100대 명산 선정 이유"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/mntnHikingPointValue" />
+
+                <TextView
+                    android:id="@+id/mntnTop100ReasonValue"
+                    style="@style/mountainInfoContent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:includeFontPadding="false"
+                    android:text="@{vm.liveMountainItem.top100reson}"
+                    app:layout_constraintStart_toStartOf="@id/mntnTop100Reason"
+                    app:layout_constraintTop_toBottomOf="@id/mntnTop100Reason"
+                    tools:text="예로부터 우리나라의 12대 명산 또는 8경에 속하는 산으로서 72년 국립공원으로 지정되었으며..." />
+
+                <TextView
+                    android:id="@+id/mntnDetailInfo"
+                    style="@style/mountainInfoTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="산 정보"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/mntnTop100ReasonValue" />
+
+                <TextView
+                    android:id="@+id/mntnDetailInfoValue"
+                    style="@style/mountainInfoContent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:includeFontPadding="false"
+                    android:text="@{vm.liveMountainItem.mntnDetailInfo}"
+                    app:layout_constraintStart_toStartOf="@id/mntnTop100Reason"
+                    app:layout_constraintTop_toBottomOf="@id/mntnDetailInfo"
+                    tools:text="예로부터 우리나라의 12대 명산 또는 8경에 속하는 산으로서 72년 국립공원으로 지정되었으며..." />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
+
+        <include layout="@layout/bottom_sheet" />
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>

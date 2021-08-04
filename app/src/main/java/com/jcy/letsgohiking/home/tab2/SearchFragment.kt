@@ -1,24 +1,25 @@
 package com.jcy.letsgohiking.home.tab2
 
-import android.os.Bundle
-import android.view.KeyEvent
-import android.view.MotionEvent
-import android.view.View
+import android.annotation.SuppressLint
+import android.view.*
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.viewpager.widget.ViewPager
+import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 import com.hdh.base.fragment.BaseDataBindingFragment
 import com.jcy.letsgohiking.MainActivity
+import com.jcy.letsgohiking.PagerFragmentStateAdapter
 import com.jcy.letsgohiking.R
 import com.jcy.letsgohiking.databinding.FragmentSearchBinding
 import com.jcy.letsgohiking.ext.hideKeyboard
+import com.jcy.letsgohiking.home.tab2.adapter.KeywordHistoryAdapter
 import com.jcy.letsgohiking.util.Log
 import kotlinx.android.synthetic.main.item_keyword_history.*
+import org.koin.android.ext.android.bind
 import org.koin.android.viewmodel.ext.android.viewModel
 import java.util.*
-import kotlin.concurrent.thread
 
 
 class SearchFragment : BaseDataBindingFragment<FragmentSearchBinding>(R.layout.fragment_search) {
@@ -26,30 +27,24 @@ class SearchFragment : BaseDataBindingFragment<FragmentSearchBinding>(R.layout.f
     private val viewModel by viewModel<SearchViewModel>()
     private lateinit var db: AppDatabase
     private lateinit var historyAdapter: KeywordHistoryAdapter
+    private var pagerAdapter: PagerFragmentStateAdapter? = null
 
     companion object {
         fun getInstance() = SearchFragment()
     }
 
-    lateinit var viewPagers: ViewPager
+
+    lateinit var viewPager : ViewPager2
     lateinit var tabLayouts: TabLayout
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
 
-        setUpViewPager()
-        db = getAppDatabase(requireContext())
-
-        binding.tabLayout.setOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-            override fun onTabSelected(tab: TabLayout.Tab?) {
-
-            }
-
-            override fun onTabUnselected(tab: TabLayout.Tab?) {}
-
-            override fun onTabReselected(tab: TabLayout.Tab?) {}
-        })
+    override fun FragmentSearchBinding.onBind() {
+        vi = this@SearchFragment
+        vm = viewModel
+        viewModel.bindLifecycle(requireActivity() as MainActivity)
         initHistoryRecyclerView()
+        db = getAppDatabase(requireContext())
+        setUpViewPager()
 
     }
 
@@ -62,6 +57,7 @@ class SearchFragment : BaseDataBindingFragment<FragmentSearchBinding>(R.layout.f
         initSearchEditText()
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private fun initSearchEditText() {
         binding.searchEdt.setOnKeyListener { v, keyCode, event ->
             if (keyCode == KeyEvent.KEYCODE_ENTER && event.action == MotionEvent.ACTION_DOWN) {
@@ -79,15 +75,28 @@ class SearchFragment : BaseDataBindingFragment<FragmentSearchBinding>(R.layout.f
     }
 
     private fun setUpViewPager() {
-        viewPagers = binding.pager
+        viewPager = binding.pager
         tabLayouts = binding.tabLayout
-
-        var adapter = DetailPagerAdapter(fragmentManager!!)
-        adapter.addFragment(RecommendCourseFragment.getInstance(), "코스 추천")
-        adapter.addFragment(DifficultyCourseFragment.getInstance(), "난이도 별 코스")
-
-        binding.pager.adapter = adapter
-        binding.tabLayout.setupWithViewPager(viewPagers)
+        pagerAdapter = PagerFragmentStateAdapter(requireActivity())
+            .apply{
+                addFragment(RecommendCourseFragment.getInstance())
+                addFragment(DifficultyCourseFragment.getInstance())
+            }
+        viewPager.apply {
+            adapter = pagerAdapter
+            registerOnPageChangeCallback(object: ViewPager2.OnPageChangeCallback(){
+                override fun onPageSelected(position: Int) {
+                    super.onPageSelected(position)
+                    Log.d("ViewPagerFragment", "Page ${position +1}")
+                }
+            })
+        }
+        TabLayoutMediator(binding.tabLayout, viewPager){tab,position->
+                when(position+1){
+                   1 -> tab.text = "지역별 산 추천"
+                   2 -> tab.text = "난이도별 산 추천"
+                }
+        }.attach()
     }
 
     fun onClickSearch(_keyword: String) {
@@ -101,7 +110,6 @@ class SearchFragment : BaseDataBindingFragment<FragmentSearchBinding>(R.layout.f
             binding.historyRecyclerView.isVisible = false
 
             viewModel.onClickSearch(requireActivity(), keyword) { isSuccessful ->
-               // Log.e("viewModelMountainArray", viewModel.mountainArray.toString())
                 if(viewModel.mountainArray.isNotEmpty()) {
                     (requireActivity() as MainActivity).supportFragmentManager.fragments.find { it is RecommendCourseFragment }
                         ?.let {
@@ -122,9 +130,6 @@ class SearchFragment : BaseDataBindingFragment<FragmentSearchBinding>(R.layout.f
                        saveSearchKeyword(keyword)
                    }
                 })
-
-
-
             }
         }
     }
@@ -152,7 +157,7 @@ class SearchFragment : BaseDataBindingFragment<FragmentSearchBinding>(R.layout.f
         }.start()
     }
 
-    private fun showHistoryView() {
+    private fun showHistoryView(){
         Thread {
             val keywords = db.historyDao().getAll().reversed()
             requireActivity().runOnUiThread {
@@ -161,7 +166,6 @@ class SearchFragment : BaseDataBindingFragment<FragmentSearchBinding>(R.layout.f
                 binding.historyRecyclerView.isVisible = true
             }
         }.start()
-
     }
 
     private fun hideHistoryView() {
@@ -175,12 +179,5 @@ class SearchFragment : BaseDataBindingFragment<FragmentSearchBinding>(R.layout.f
             db.historyDao().insertHistory(History(null, keyword))
         }.start()
     }
-
-    override fun FragmentSearchBinding.onBind() {
-        vi = this@SearchFragment
-        vm = viewModel
-        viewModel.bindLifecycle(requireActivity() as MainActivity)
-    }
-
 
 }

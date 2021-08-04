@@ -1,4 +1,4 @@
-package com.jcy.letsgohiking.network.api
+package com.jcy.letsgohiking.util
 
 import com.jcy.letsgohiking.Key
 import com.jcy.letsgohiking.Url
@@ -8,8 +8,8 @@ import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Query
 
+interface ApiService {
 
-interface Api {
     @GET(Url.GET_TMAP_LOCATION)
     suspend fun getSearchLocation(
         @Header("appKey") appKey: String = Key.TMAP_API,
@@ -28,4 +28,5 @@ interface Api {
         @Query("centerLon") centerLon: String? = null,
         @Query("centerLat") centerLat: String? = null
     ): Response<SearchResponse>
+
 }

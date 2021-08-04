@@ -5,6 +5,7 @@ import android.view.View
 import com.hdh.base.fragment.BaseDataBindingFragment
 import com.jcy.letsgohiking.R
 import com.jcy.letsgohiking.databinding.FragmentHomeBinding
+import com.jcy.letsgohiking.util.Log
 import java.util.*
 
 
@@ -19,9 +20,9 @@ class HomeFragment : BaseDataBindingFragment<FragmentHomeBinding>(R.layout.fragm
 
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        Log.e("오늘달", (Calendar.getInstance().get(Calendar.MONTH)+1).toString())
     }
 
     override fun FragmentHomeBinding.onBind() {
