@@ -1,7 +1,6 @@
 package com.jcy.letsgohiking.home.tab2
 
 import android.app.Activity
-import android.graphics.Color
 import android.os.Bundle
 import android.view.MotionEvent
 import android.view.View
@@ -10,12 +9,11 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.hdh.base.fragment.BaseDataBindingFragment
 import com.hdh.base.recycler.BaseDataBindingRecyclerViewAdapter
-import com.hdh.base.recycler.BaseDataBindingViewHolder
 import com.jcy.letsgohiking.ActivityNavigator
 import com.jcy.letsgohiking.R
 import com.jcy.letsgohiking.databinding.FragmentRecommendCourseBinding
 import com.jcy.letsgohiking.databinding.ItemAreaKeywordBinding
-
+import com.jcy.letsgohiking.databinding.ItemAreaKeywordDefaultBinding
 import com.jcy.letsgohiking.home.tab2.adapter.MountainAdapter
 import com.jcy.letsgohiking.home.tab2.model.Area
 import com.jcy.letsgohiking.util.Log
@@ -30,6 +28,7 @@ class RecommendCourseFragment :
     private var isSearchResult = false
     private var url = ""
     private var itemAreaBinding: ItemAreaKeywordBinding? = null
+    private var itemAreaBindingDefault: ItemAreaKeywordDefaultBinding? = null
 
     override fun FragmentRecommendCourseBinding.onBind() {
         vm = viewModel
@@ -58,11 +57,21 @@ class RecommendCourseFragment :
         }
     }
     private fun initAreaRecyclerView(){
+
         binding.rvAreakeyword.run {
             adapter = BaseDataBindingRecyclerViewAdapter<Area>()
                 .setItemViewType { item, position, isLast ->
-                    if (position == 0) 0 else 0
+                   // if (position == 0) 0 else 1
+                    if(position ==0) 0 else 1
+
                 }
+                .addViewType(
+                    BaseDataBindingRecyclerViewAdapter.MultiViewType<Area, ItemAreaKeywordDefaultBinding>(R.layout.item_area_keyword_default) {
+                        vi = this@RecommendCourseFragment
+                        item = it
+                        itemAreaBindingDefault = this
+                        this.seaulBtn.isSelected = true
+                    })
                 .addViewType(
                     BaseDataBindingRecyclerViewAdapter.MultiViewType<Area, ItemAreaKeywordBinding>(R.layout.item_area_keyword) {
                         vi = this@RecommendCourseFragment
@@ -71,12 +80,14 @@ class RecommendCourseFragment :
                     })
         }
         binding.rvAreakeyword.addOnItemTouchListener(object : RecyclerView.OnItemTouchListener{
+
             override fun onInterceptTouchEvent(rv: RecyclerView, e: MotionEvent): Boolean {
                 if(e.action == MotionEvent.ACTION_MOVE){}
                 else{
-                    var child = rv.findChildViewUnder(e.getX(), e.getY())
+                    var child = rv.findChildViewUnder(e.x, e.y)
                     if(child != null){
                         var position = rv.getChildAdapterPosition(child)
+                        Log.e("position", position.toString())
                         var view = rv.layoutManager?.findViewByPosition(position)
                         view?.isSelected = true
                         for(i in 0..rv.adapter!!.itemCount){
@@ -96,7 +107,8 @@ class RecommendCourseFragment :
             override fun onTouchEvent(rv: RecyclerView, e: MotionEvent) {}
             override fun onRequestDisallowInterceptTouchEvent(disallowIntercept: Boolean) {}
 
-        })
+        }
+        )
     }
 
     private fun initProgressBar() {
@@ -145,9 +157,11 @@ class RecommendCourseFragment :
 
     fun onClickItem(view: View, area: String) {
 
+        itemAreaBindingDefault?.seaulBtn?.isSelected = false
         var areaCode = "-1"
         when (area) {
-            "서울특별시" -> areaCode = "01"
+            "서울특별시" -> { areaCode = "01"
+                itemAreaBindingDefault?.seaulBtn?.isSelected = true }
             "부산광역시" -> areaCode = "02"
             "대구광역시" -> areaCode = "03"
             "인천광역시" -> areaCode = "04"
@@ -166,7 +180,7 @@ class RecommendCourseFragment :
             else -> "01"
         }
         Log.e("클릭?", "${areaCode}로 확인")
-        getMountains(requireActivity(), url, areaCode) //서울로 초기화
+        getMountains(requireActivity(), url, areaCode)
         showProgress(true)
     }
 

@@ -14,6 +14,7 @@ class MyApplication : Application() {
 
     companion object {
         private var instance: MyApplication? = null
+        lateinit var prefs: PreferenceUtil
         val globalApplicationContext: MyApplication
             get() {
                 checkNotNull(instance) { "this application does not inherit CoinoneApplication" }
@@ -27,6 +28,7 @@ class MyApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         instance = this
+        prefs = PreferenceUtil(applicationContext)
 
         if (BuildConfig.DEBUG) {
             Stetho.initializeWithDefaults(this)

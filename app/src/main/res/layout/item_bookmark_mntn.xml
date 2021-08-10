@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="8dp"
+        android:layout_marginVertical="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:cardCornerRadius="16dp"
+        app:cardPreventCornerOverlap="false">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/btn_recycle_item"
+            android:layout_gravity="center">
+
+            <ImageView
+                android:id="@+id/mntn_img"
+                android:layout_width="match_parent"
+                android:layout_height="130dp"
+                android:scaleType="center"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/mntn_name"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/recommend_mntn_title_bg_30"
+                android:fontFamily="@font/gaegu_bold"
+                android:padding="10dp"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@id/mntn_img"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:text="한라산" />
+
+
+            <TextView
+                android:id="@+id/mntn_location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="16dp"
+                android:ellipsize="end"
+                android:fontFamily="@font/gaegu_bold"
+                android:lines="1"
+                android:maxEms="5"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/mntn_img"
+                tools:text="전주" />
+
+
+
+            <TextView
+                android:id="@+id/mntn_height"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:fontFamily="@font/gaegu_bold"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="@id/mntn_location"
+                app:layout_constraintTop_toBottomOf="@id/mntn_location"
+                tools:text="1,230m" />
+
+
+            <TextView
+                android:id="@+id/mntn_subinfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="10dp"
+                android:ellipsize="end"
+                android:fontFamily="@font/gaegu_bold"
+                android:lines="1"
+                android:maxEms="5"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@id/mntn_location"
+                app:layout_constraintTop_toBottomOf="@id/mntn_height"
+                tools:text="강원도 정선군 정선읍 회동리, 강원도 평창군 진부면, 북평면" />
+
+            <ImageView
+                android:id="@+id/bookmarkBtn"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_bookmark_selector"
+                android:layout_marginEnd="24dp"
+                app:layout_constraintTop_toBottomOf="@id/mntn_img"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:foregroundTint="@color/black"
+                app:tint="@color/black" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+</layout>

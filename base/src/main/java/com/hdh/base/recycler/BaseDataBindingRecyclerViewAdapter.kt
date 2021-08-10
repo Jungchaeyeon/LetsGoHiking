@@ -1,6 +1,7 @@
 package com.hdh.base.recycler
 
 import android.util.Log
+import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.DiffUtil
@@ -43,6 +44,7 @@ class BaseDataBindingRecyclerViewAdapter<T : Any>
         return this
     }
 
+
     /**
      * @see MultiViewType
      * @param multiViewType ex) MultiViewType<Item, ImgItemBinding>(R.layout.img_item) { }
@@ -74,7 +76,6 @@ class BaseDataBindingRecyclerViewAdapter<T : Any>
     ) {
         holder.bindData(items[position])
         holder.itemView.setOnClickListener{ Log.e("clickTest", "아이템 클릭 확인. position : ${holder.adapterPosition}") }
-
     }
 
 
@@ -90,6 +91,7 @@ class BaseDataBindingRecyclerViewAdapter<T : Any>
         return itemViewType?.invoke(getItem(position), position, itemCount - 1 == position) ?: 0
     }
 
+
     fun setItems(items: MutableList<T>) {
         this.items = items
     }
@@ -97,6 +99,7 @@ class BaseDataBindingRecyclerViewAdapter<T : Any>
     fun getItems() = items
 
     fun getItem(position: Int) = items[position]
+
 
     fun add(item: T): Boolean {
         val insertPosition = itemCount

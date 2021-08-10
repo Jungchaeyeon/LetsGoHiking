@@ -103,6 +103,7 @@ class SearchViewModel(): BaseViewModel(){
                             if(mountainImgUrl == "http://www.forest.go.kr/newkfsweb/cmm/fms/getImage.do?fileSn=1&atchFileId="){
                                 continue
                             }
+                            mountain.mntnId = getTagValue("mntnid", eElement).toLong()
                             mountain.mntnName = getTagValue("mntnnm",eElement)
                             mountain.mntnHeight = mountainHeight.toInt()
                             mountain.mntnLocation = getTagValue("mntninfopoflc",eElement)
@@ -188,6 +189,7 @@ class SearchViewModel(): BaseViewModel(){
                             if(mountainImgUrl == "http://www.forest.go.kr/newkfsweb/cmm/fms/getImage.do?fileSn=1&atchFileId="){
                                 continue
                             }
+                            mountain.mntnId = getTagValue("mntnid", eElement).toLong()
                             mountain.mntnName = getTagValue("mntnnm",eElement)
                             mountain.mntnHeight = mountainHeight.toInt()
                             mountain.mntnLocation = getTagValue("mntninfopoflc",eElement)
@@ -286,6 +288,7 @@ class SearchViewModel(): BaseViewModel(){
                             if(mountainImgUrl == "http://www.forest.go.kr/newkfsweb/cmm/fms/getImage.do?fileSn=1&atchFileId="){
                                 continue
                             }
+                            mountain.mntnId = getTagValue("mntnid", eElement).toLong()
                             mountain.mntnName = getTagValue("mntnnm",eElement)
                             mountain.mntnHeight = mountainHeight.toInt()
                             mountain.mntnLocation = getTagValue("mntninfopoflc",eElement)

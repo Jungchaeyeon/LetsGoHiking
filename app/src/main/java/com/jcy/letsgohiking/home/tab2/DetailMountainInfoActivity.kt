@@ -3,11 +3,9 @@ package com.jcy.letsgohiking.home.tab2
 import android.location.LocationManager
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
+import android.view.View
 import androidx.core.view.isVisible
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -18,6 +16,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.hdh.base.activity.BaseDataBindingActivity
 import com.jcy.letsgohiking.ActivityNavigator
 import com.jcy.letsgohiking.R
+import com.jcy.letsgohiking.SampleToast
 import com.jcy.letsgohiking.databinding.ActivityDetailMountainInfoBinding
 
 import com.jcy.letsgohiking.home.tab2.adapter.SearchRecyclerAdapter
@@ -36,12 +35,14 @@ class DetailMountainInfoActivity :
     BaseDataBindingActivity<ActivityDetailMountainInfoBinding>(R.layout.activity_detail_mountain_info),
     OnMapReadyCallback, CoroutineScope{
 
+    private lateinit var db: AppDatabase
     private lateinit var job: Job
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.Main + job
     private var currentSelectMarker: Marker?= null
     private lateinit var map: GoogleMap
     private lateinit var searchResult: SearchResultEntity
+    private var isBookmarked = false
 
     //안드로이드에서 위치정보를 불러올 때 관리해주는 utility 클래스
     private lateinit var locationManager: LocationManager
@@ -60,12 +61,13 @@ class DetailMountainInfoActivity :
         super.setupProperties(bundle)
 
          mntn = bundle?.getSerializable(ActivityNavigator.KEY_DATA) as MountainItem
-
-        viewModel.liveMountainItem.value= bundle?.getSerializable(ActivityNavigator.KEY_DATA) as MountainItem
+         viewModel.liveMountainItem.value= bundle?.getSerializable(ActivityNavigator.KEY_DATA) as MountainItem
     }
     override fun ActivityDetailMountainInfoBinding.onBind() {
+        vi = this@DetailMountainInfoActivity
         vm = viewModel
         viewModel.bindLifecycle(this@DetailMountainInfoActivity)
+        db = getAppDatabaseMntn(applicationContext)
         job = Job()
 
         initAdapter()
@@ -73,9 +75,7 @@ class DetailMountainInfoActivity :
         initData()
         searchKeyword(mntn.mntnName)
     }
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
+
     private fun searchKeyword(keyword: String){
         launch(coroutineContext) {
             try {
@@ -144,10 +144,41 @@ class DetailMountainInfoActivity :
         if(mntn.courseInfo.trim()!="&amp;nbsp;"){
             binding.mntnHikingPointViewGroup.isVisible = true
         }
+        setBookmarkBtn()
 //        Glide.with(applicationContext)
 //            .load(viewModel.liveMountainItem.value?.mntnImg)
 //            .into(binding.mntnImageView)
-
+    }
+    private fun setBookmarkBtn(){
+        Thread{
+           val getItem: MountainItem? = db.mountainDao().findMountain(mntn.mntnId)
+            this.runOnUiThread {
+                isBookmarked = getItem?.isBookmarked ?: false
+                Log.e("isBookmarked", isBookmarked.toString())
+                binding.bookmarkBtn.isSelected = isBookmarked //Bookmark버튼 isBookmarked 에 따른 UI처리
+            }
+        }.start()
+    }
+    fun onClickBookmark(view: View){
+        view.isSelected = !view.isSelected
+        if(view.isSelected) {
+            if(mntn.mntnName =="") return
+            mntn.isBookmarked = true
+            Thread(Runnable {
+                db.mountainDao().insertMountain(mntn)
+                Thread.sleep(1000)
+                val list = db.mountainDao().getAll()
+                Log.e("check items",list.toString())
+            }).start()
+            SampleToast.createToast(this, "북마크에 저장되었습니다.")?.show()
+        }
+        else{
+            mntn.isBookmarked = false
+            Thread(Runnable {
+                db.mountainDao().delete(mntn)
+            }).start()
+            SampleToast.createToast(this, "북마크에서 삭제되었습니다.")?.show()
+        }
     }
     private fun initAdapter(){
         adapter = SearchRecyclerAdapter()
