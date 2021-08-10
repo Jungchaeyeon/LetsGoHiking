@@ -28,10 +28,6 @@ class MainActivity : BaseDataBindingActivity<ActivityMainBinding>(R.layout.activ
         initNavigation()
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
     private fun initNavigation(){
         binding.bottomNavBar.itemIconTintList =null
         binding.bottomNavBar.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)

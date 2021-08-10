@@ -13,7 +13,6 @@ import com.jcy.letsgohiking.ActivityNavigator
 import com.jcy.letsgohiking.R
 import com.jcy.letsgohiking.databinding.FragmentRecommendCourseBinding
 import com.jcy.letsgohiking.databinding.ItemAreaKeywordBinding
-import com.jcy.letsgohiking.databinding.ItemAreaKeywordDefaultBinding
 import com.jcy.letsgohiking.home.tab2.adapter.MountainAdapter
 import com.jcy.letsgohiking.home.tab2.model.Area
 import com.jcy.letsgohiking.util.Log
@@ -28,19 +27,36 @@ class RecommendCourseFragment :
     private var isSearchResult = false
     private var url = ""
     private var itemAreaBinding: ItemAreaKeywordBinding? = null
-    private var itemAreaBindingDefault: ItemAreaKeywordDefaultBinding? = null
 
     override fun FragmentRecommendCourseBinding.onBind() {
         vm = viewModel
+
         initAdapter()
         initProgressBar()
         initAreaRecyclerView()
+
+        binding.rvAreakeyword.run {
+            adapter = BaseDataBindingRecyclerViewAdapter<Area>()
+                .setItemViewType { item, position, isLast ->
+                    // if (position == 0) 0 else 1
+                    if(position ==0) 0 else 0
+
+                }
+                .addViewType(
+                    BaseDataBindingRecyclerViewAdapter.MultiViewType<Area, ItemAreaKeywordBinding>(R.layout.item_area_keyword) {
+                        vi = this@RecommendCourseFragment
+                        item = it
+                        itemAreaBinding = this
+                    })
+        }
+
     }
 
     override fun onResume() {
         super.onResume()
         viewModel.requestAreaKeywordData()
     }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -58,27 +74,7 @@ class RecommendCourseFragment :
     }
     private fun initAreaRecyclerView(){
 
-        binding.rvAreakeyword.run {
-            adapter = BaseDataBindingRecyclerViewAdapter<Area>()
-                .setItemViewType { item, position, isLast ->
-                   // if (position == 0) 0 else 1
-                    if(position ==0) 0 else 1
 
-                }
-                .addViewType(
-                    BaseDataBindingRecyclerViewAdapter.MultiViewType<Area, ItemAreaKeywordDefaultBinding>(R.layout.item_area_keyword_default) {
-                        vi = this@RecommendCourseFragment
-                        item = it
-                        itemAreaBindingDefault = this
-                        this.seaulBtn.isSelected = true
-                    })
-                .addViewType(
-                    BaseDataBindingRecyclerViewAdapter.MultiViewType<Area, ItemAreaKeywordBinding>(R.layout.item_area_keyword) {
-                        vi = this@RecommendCourseFragment
-                        item = it
-                        itemAreaBinding = this
-                    })
-        }
         binding.rvAreakeyword.addOnItemTouchListener(object : RecyclerView.OnItemTouchListener{
 
             override fun onInterceptTouchEvent(rv: RecyclerView, e: MotionEvent): Boolean {
@@ -156,12 +152,9 @@ class RecommendCourseFragment :
     }
 
     fun onClickItem(view: View, area: String) {
-
-        itemAreaBindingDefault?.seaulBtn?.isSelected = false
         var areaCode = "-1"
         when (area) {
-            "서울특별시" -> { areaCode = "01"
-                itemAreaBindingDefault?.seaulBtn?.isSelected = true }
+            "서울특별시" ->  areaCode = "01"
             "부산광역시" -> areaCode = "02"
             "대구광역시" -> areaCode = "03"
             "인천광역시" -> areaCode = "04"

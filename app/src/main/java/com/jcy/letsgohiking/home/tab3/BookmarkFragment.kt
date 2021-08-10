@@ -41,7 +41,11 @@ class BookmarkFragment : BaseDataBindingFragment<FragmentBookmarkBinding>(R.layo
         db = getAppDatabaseMntn(requireContext())
     }
     private fun initAdapter() {
-        adapter = MountainBookmarkAdapter()
+        adapter = MountainBookmarkAdapter(callback = { mntnItem ->
+            context?.let {
+                ActivityNavigator.with(it).todetailmountainpage(mntnItem).start()
+            }
+        })
         binding.bookmarkMntnList.adapter = adapter
     }
     private fun initDB(){

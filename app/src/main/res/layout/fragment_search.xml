@@ -45,7 +45,7 @@
                 android:layout_marginTop="15dp"
                 android:background="@drawable/search_edit_background"
                 android:drawableStart="@drawable/ic_loupe"
-                android:paddingStart="24dp"
+                android:paddingStart="16dp"
                 android:text="@={vm.liveKeyword}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

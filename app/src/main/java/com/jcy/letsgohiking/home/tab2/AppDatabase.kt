@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 import com.jcy.letsgohiking.dao.HistoryDAO
 import com.jcy.letsgohiking.dao.MountainDao
 
-@Database(entities = [History::class, MountainItem::class],version = 4)
+@Database(entities = [History::class, MountainItem::class],version = 5)
 abstract class AppDatabase : RoomDatabase(){
     abstract fun historyDao() : HistoryDAO
     abstract fun mountainDao(): MountainDao
@@ -19,6 +19,8 @@ fun getAppDatabase(context: Context): AppDatabase{
         AppDatabase::class.java,
         "MountainSearchDB"
     )
+        .allowMainThreadQueries()
+        .fallbackToDestructiveMigrationFrom(2, 5)
         .build()
 }
 fun getAppDatabaseMntn(context: Context): AppDatabase{
@@ -26,6 +28,7 @@ fun getAppDatabaseMntn(context: Context): AppDatabase{
         context,
         AppDatabase::class.java,
         "MountainBookmarkDB"
-    )
+    )  .allowMainThreadQueries()
+        .fallbackToDestructiveMigrationFrom(2, 5)
         .build()
 }

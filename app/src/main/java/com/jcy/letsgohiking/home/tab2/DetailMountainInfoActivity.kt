@@ -166,9 +166,6 @@ class DetailMountainInfoActivity :
             mntn.isBookmarked = true
             Thread(Runnable {
                 db.mountainDao().insertMountain(mntn)
-                Thread.sleep(1000)
-                val list = db.mountainDao().getAll()
-                Log.e("check items",list.toString())
             }).start()
             SampleToast.createToast(this, "북마크에 저장되었습니다.")?.show()
         }

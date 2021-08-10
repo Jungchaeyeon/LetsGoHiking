@@ -10,7 +10,7 @@ import com.jcy.letsgohiking.databinding.ItemBookmarkMntnBinding
 import com.jcy.letsgohiking.home.tab2.MountainItem
 
 
-class MountainBookmarkAdapter(): ListAdapter<MountainItem, MountainBookmarkAdapter.ItemViewHolder>(
+class MountainBookmarkAdapter(val callback:(MountainItem)->Unit): ListAdapter<MountainItem, MountainBookmarkAdapter.ItemViewHolder>(
     diffUtil
 ) {
     var itemPosition: Int = -1
@@ -23,10 +23,15 @@ class MountainBookmarkAdapter(): ListAdapter<MountainItem, MountainBookmarkAdapt
             binding.mntnHeight.text = mountainItem.mntnHeight.toString()
             binding.mntnSubinfo.text = mountainItem.mntnInfo
             binding.mntnLocation.text = mountainItem.mntnLocation
+            binding.bookmarkBtn.isSelected = mountainItem.isBookmarked
 
             Glide.with(binding.mntnImg.context)
                 .load(mountainItem.mntnImg)
                 .into(binding.mntnImg)
+
+            binding.root.setOnClickListener {
+                callback(mountainItem)
+            }
 
         }
     }

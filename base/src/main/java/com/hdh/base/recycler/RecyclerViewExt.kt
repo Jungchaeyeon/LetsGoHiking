@@ -19,7 +19,6 @@ fun RecyclerView.replaceAll(list: List<Any>?) {
         adapter as? BaseDataBindingRecyclerViewAdapter<Any> != null -> {
             (adapter as BaseDataBindingRecyclerViewAdapter<Any>).run {
                 replaceAll(list)
-                setItems(list as MutableList<Any>)
             }
         }
     }
