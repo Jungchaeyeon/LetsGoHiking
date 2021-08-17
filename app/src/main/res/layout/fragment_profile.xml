@@ -1,22 +1,122 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
-    <data>
 
+    <data>
+        <variable
+            name="vm"
+            type="com.jcy.letsgohiking.home.tab5.MoreInfoViewmodel" />
         <variable
             name="vi"
             type="com.jcy.letsgohiking.home.tab5.ProfileFragment" />
 
     </data>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".home.tab1.HomeFragment">
 
-    <TextView
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="hello_profile_fragment" />
+        android:background="@color/white"
+        tools:context=".home.tab1.HomeFragment">
 
-</FrameLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="36dp"
+                android:fontFamily="@font/gaegu_bold"
+                android:text="@string/moreInfo"
+                android:textSize="24sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+                <ImageView
+                    android:id="@+id/profileImage"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_profile"
+                    android:layout_marginStart="16dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="12dp"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/gaegu_regular"
+                    android:text="@{vm.liveName}"
+                    tools:text="챈"/>
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_marginStart="8dp"
+                    android:backgroundTint="@color/gray"
+                    android:src="@drawable/ic_baseline_arrow_forward_ios_24"
+                    />
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/gray"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="24dp"
+                    android:fontFamily="@font/gaegu_regular"
+                    android:textSize="16sp"
+                    android:text="@string/manageAccount"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"/>
+                <TextView
+                    android:id="@+id/loginType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="24dp"
+                    android:fontFamily="@font/gaegu_regular"
+                    android:textSize="16sp"
+                    tools:text="카카오로그인"/>
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/gray"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:onClick="@{()->vi.onClickLogout()}">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/logout"
+                    android:textColor="@color/red"
+                    android:textSize="16sp"
+                    android:layout_marginStart="24dp"
+                    android:fontFamily="@font/gaegu_regular"/>
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/gray"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"/>
+        </LinearLayout>
+    </FrameLayout>
 </layout>

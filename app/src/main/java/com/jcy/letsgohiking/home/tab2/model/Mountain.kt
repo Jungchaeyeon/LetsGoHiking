@@ -1,6 +1,4 @@
-package com.jcy.letsgohiking.home.tab2
-
-import com.google.gson.annotations.SerializedName
+package com.jcy.letsgohiking.home.tab2.model
 
 //data class Mountain(
 //        @SerializedName("mntnnm") var mntnName: String,
@@ -18,9 +16,9 @@ data class Mountain(
 
     ){
     data class Response(
-    val script: String,
-    val header: Header,
-    val body: Body
+        val script: String,
+        val header: Header,
+        val body: Body
     )
 
     data class Header(

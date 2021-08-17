@@ -3,7 +3,7 @@ package com.jcy.letsgohiking.dao
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
-import com.jcy.letsgohiking.home.tab2.History
+import com.jcy.letsgohiking.home.tab2.model.History
 
 @Dao
 interface HistoryDAO {

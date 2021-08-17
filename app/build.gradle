@@ -3,6 +3,7 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-kapt'
     id 'kotlin-android-extensions'
+    id 'com.google.gms.google-services'
 }
 
 android {
@@ -11,7 +12,7 @@ android {
     buildToolsVersion rootProject.buildToolVersion
 
     defaultConfig {
-        applicationId "com.jcy.yanado"
+        applicationId "com.jcy.letsgohiking"
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.targetSdkVersion
         versionCode rootProject.versionCode
@@ -44,6 +45,9 @@ android {
             versionNameSuffix "-dev"
             resValue "string", "app_name", rootProject.appNameDev
             buildConfigField "String", "API_URL", rootProject.apiUrlDev
+            manifestPlaceholders = rootProject.manifestPlaceholdersDev
+            buildConfigField "String", "KAKAO_APP_KEY", rootProject.kakaoAppKeyDev
+            buildConfigField "String", "KAKAO_OAUTH_APP_KEY", rootProject.kakaoOauthAppKeyDev
 
         }
 
@@ -53,12 +57,18 @@ android {
             versionNameSuffix "-stage"
             resValue "string", "app_name", rootProject.appNameStage
             buildConfigField "String", "API_URL", rootProject.apiUrlStage
+            manifestPlaceholders = rootProject.manifestPlaceholdersStage
+            buildConfigField "String", "KAKAO_APP_KEY", rootProject.kakaoAppKeyStage
+            buildConfigField "String", "KAKAO_OAUTH_APP_KEY", rootProject.kakaoOauthAppKeyStage
         }
 
         real {
             dimension "yanado"
             resValue "string", "app_name", rootProject.appName
             buildConfigField "String", "API_URL", rootProject.apiUrl
+            manifestPlaceholders = rootProject.manifestPlaceholders
+            buildConfigField "String", "KAKAO_APP_KEY", rootProject.kakaoAppKey
+            buildConfigField "String", "KAKAO_OAUTH_APP_KEY", rootProject.kakaoOauthAppKey
         }
     }
 
@@ -100,7 +110,15 @@ dependencies {
     implementation "androidx.appcompat:appcompat:$appcompatVersion"
     implementation "com.google.android.material:material:$materialVersion"
 
+    //firebase
+    implementation platform('com.google.firebase:firebase-bom:28.2.1')
+    implementation 'com.google.firebase:firebase-analytics-ktx'
+    implementation 'com.google.firebase:firebase-auth-ktx'
+    implementation 'com.google.firebase:firebase-firestore-ktx'
+    implementation 'com.google.firebase:firebase-functions-ktx'
 
+    //lottie
+    implementation "com.airbnb.android:lottie:$lottieVersion"
     // androidx
     implementation "androidx.constraintlayout:constraintlayout:$constraintLayoutVersion"
     implementation "androidx.cardview:cardview:$cardviewVersion"
@@ -111,6 +129,10 @@ dependencies {
 
     // RxJava2
     implementation "io.reactivex.rxjava2:rxandroid:$rxAndroidVersion"
+
+    //kakao
+    implementation "com.kakao.sdk:v2-user-rx:$kakaoVersion"
+    implementation 'androidx.work:work-runtime:2.5.0'// 카카오 로그인
 
     // OKHttp3 + Retrofit2
     implementation "com.squareup.okhttp3:logging-interceptor:$okhttpVersion"
@@ -125,6 +147,8 @@ dependencies {
     //google map api
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
     implementation 'com.google.android.gms:play-services-location:17.1.0'
+    //google play services
+    implementation 'com.google.android.gms:play-services-auth:19.2.0'
 
     // Glide
     implementation "com.github.bumptech.glide:glide:$glideVersion"

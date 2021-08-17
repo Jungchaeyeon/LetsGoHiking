@@ -19,4 +19,9 @@
     <color name="light_green">#DCFDA7</color>
     <color name="mango">#FFE289</color>
     <color name="gray">#adadad</color>
+    <color name="dark_gray">#23252B</color>
+    <color name="dip_dark_gray">#202123</color>
+    <color name="trans">#00000000</color>
+    <color name="dark_green">#0A2919</color>
+    <color name="red">#F44336</color>
 </resources>

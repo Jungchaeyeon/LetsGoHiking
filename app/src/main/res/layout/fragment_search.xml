@@ -17,7 +17,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white"
+        android:background="@color/dark_gray"
         tools:context=".home.tab1.HomeFragment">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -32,6 +32,7 @@
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="16dp"
                 android:fontFamily="@font/gaegu_bold"
+                android:textColor="@color/white"
                 android:text="@string/search_korea_mountain"
                 android:textSize="23sp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -68,6 +69,7 @@
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/tabLayout"
                 style="@style/tab_text"
+                app:tabTextColor="@color/white"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"

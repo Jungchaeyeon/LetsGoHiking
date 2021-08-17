@@ -1,9 +1,6 @@
 package com.jcy.letsgohiking
 
-import android.os.Bundle
-import android.view.View
 import androidx.fragment.app.Fragment
-import com.google.android.material.bottomnavigation.BottomNavigationItemView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.hdh.base.activity.BaseDataBindingActivity
 import com.jcy.letsgohiking.databinding.ActivityMainBinding

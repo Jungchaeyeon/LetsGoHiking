@@ -15,9 +15,9 @@ import com.jcy.letsgohiking.R
 import com.jcy.letsgohiking.databinding.FragmentSearchBinding
 import com.jcy.letsgohiking.ext.hideKeyboard
 import com.jcy.letsgohiking.home.tab2.adapter.KeywordHistoryAdapter
+import com.jcy.letsgohiking.home.tab2.model.History
 import com.jcy.letsgohiking.util.Log
 import kotlinx.android.synthetic.main.item_keyword_history.*
-import org.koin.android.ext.android.bind
 import org.koin.android.viewmodel.ext.android.viewModel
 import java.util.*
 

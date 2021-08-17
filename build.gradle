@@ -24,6 +24,8 @@ buildscript {
         rxAndroidVersion = '2.1.1'
         rxJava = '2.2.13'
 
+        kakaoVersion = '2.3.0'
+
         okhttpVersion = '4.9.0'
         retrofitVersion = '2.3.0'
 
@@ -40,6 +42,8 @@ buildscript {
 
         jsoupVersion = '1.11.1'
 
+        lottieVersion ="3.5.0"
+
         jvmTargetVersion = "1.8"
 
         //Test
@@ -53,14 +57,24 @@ buildscript {
         //Dev
         appNameDev = "MakeUs-DEV"
         apiUrlDev = "\"http://api.visitkorea.or.kr/\""
+        kakaoAppKeyDev = "\"b06197c7ca4f230f05a2bc7a0328bc94\""
+        kakaoOauthAppKeyDev = "\"kakaob06197c7ca4f230f05a2bc7a0328bc94\""
+        manifestPlaceholdersDev = [KAKAO_APP_KEY : "b06197c7ca4f230f05a2bc7a0328bc94" , KAKAO_OAUTH_APP_KEY : "kakaob06197c7ca4f230f05a2bc7a0328bc94"]
 
         //Stage
         appNameStage = "MakeUs-Stage"
         apiUrlStage = "\"http://api.visitkorea.or.kr/\""
+        kakaoAppKeyStage = "\"b06197c7ca4f230f05a2bc7a0328bc94\""
+        kakaoOauthAppKeyStage = "\"kakaob06197c7ca4f230f05a2bc7a0328bc94\""
+        manifestPlaceholdersStage = [KAKAO_APP_KEY : "b06197c7ca4f230f05a2bc7a0328bc94" , KAKAO_OAUTH_APP_KEY : "kakaob06197c7ca4f230f05a2bc7a0328bc94"]
+
 
         //Real
         appName = "MakeUs"
         apiUrl = "\"http://api.visitkorea.or.kr/\""
+        kakaoAppKey = "\"b06197c7ca4f230f05a2bc7a0328bc94\""
+        kakaoOauthAppKey = "\"kakaob06197c7ca4f230f05a2bc7a0328bc94\""
+        manifestPlaceholders = [KAKAO_APP_KEY : "b06197c7ca4f230f05a2bc7a0328bc94" , KAKAO_OAUTH_APP_KEY : "kakaob06197c7ca4f230f05a2bc7a0328bc94"]
     }
 
     repositories {
@@ -72,7 +86,7 @@ buildscript {
     dependencies {
         classpath "com.android.tools.build:gradle:$gradleVersion"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
-
+        classpath 'com.google.gms:google-services:4.3.10'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
@@ -87,7 +101,7 @@ allprojects {
         maven { url 'https://jitpack.io' }
         maven { url 'https://maven.google.com' }
         maven { url 'https://dl.bintray.com/ekito/koin' }
-
+        maven { url 'https://devrepo.kakao.com/nexus/content/groups/public/' }
         google()
     }
 }

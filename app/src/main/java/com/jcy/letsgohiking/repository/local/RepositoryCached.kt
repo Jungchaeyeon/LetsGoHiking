@@ -39,6 +39,11 @@ abstract class RepositoryCached {
         return value
     }
 
+    fun getUserId() = getGeneralValue(LocalKey.USERID , "")
+    fun getUserName() = getGeneralValue(LocalKey.USERNAME , "")
+    fun getLoginType() = getValue(LocalKey.LOGINTYPE , "")
+    fun getGoogleToken() = getValue(LocalKey.GOOGLETOKEN,"")
+
     protected abstract fun setRawValue(key: LocalKey, value: Any?)
     protected abstract fun getRawValue(key: LocalKey): String?
     protected abstract fun clear()

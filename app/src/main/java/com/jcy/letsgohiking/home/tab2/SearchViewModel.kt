@@ -6,7 +6,7 @@ import com.hdh.base.viewmodel.BaseViewModel
 import com.jcy.letsgohiking.MyApplication.Companion.getString
 import com.jcy.letsgohiking.R
 import com.jcy.letsgohiking.home.tab2.model.Area
-import com.jcy.letsgohiking.repository.ApiRepository
+import com.jcy.letsgohiking.home.tab2.model.MountainItem
 import com.jcy.letsgohiking.util.Log
 import org.w3c.dom.Document
 import org.w3c.dom.Element
@@ -184,20 +184,37 @@ class SearchViewModel(): BaseViewModel(){
                         val mountain : MountainItem = MountainItem()
                         val mountainImgUrl = getTagValue("mntnattchimageseq", eElement)
                         val mountainHeight = getTagValue("mntninfohght",eElement).trim()
+                        val mntnDetailInfo = getTagValue("mntninfodtlinfocont", eElement).trim()
+                        var top100reson = getTagValue("hndfmsmtnslctnrson",eElement).trim()
+                        var courseInfo = getTagValue("crcmrsghtnginfoetcdscrt", eElement).trim()
+                        val mntnName = getTagValue("mntnnm",eElement).trim()
 
-                        if(mountainImgUrl.isNotEmpty() && mountainHeight.isNotEmpty()){
-                            if(mountainImgUrl == "http://www.forest.go.kr/newkfsweb/cmm/fms/getImage.do?fileSn=1&atchFileId="){
-                                continue
+                            //예외처리-----------------------------------------------------------------------------
+                            if(mountainImgUrl.isNotEmpty() && mountainHeight.isNotEmpty()) {
+                                if (mountainImgUrl == "http://www.forest.go.kr/newkfsweb/cmm/fms/getImage.do?fileSn=1&atchFileId=") {
+                                    continue
+                                }
                             }
+                            if(mountainHeight=="") continue
+                            if(mntnDetailInfo == "&amp;nbsp;") continue
+                            if(courseInfo =="&amp;#160;") {
+                                courseInfo ="정보가 없습니다:)"
+                            }
+                            when(top100reson){
+                                "&nbsp;","&amp;#160;","<p>&nbsp;</P>" -> top100reson = "정보가 없습니다:)"
+                            }
+                            if(mntnName =="구룡산" || mntnName=="견두산") continue
+                            //예외처리-----------------------------------------------------------------------------
+
                             mountain.mntnId = getTagValue("mntnid", eElement).toLong()
-                            mountain.mntnName = getTagValue("mntnnm",eElement)
+                            mountain.mntnName = mntnName
                             mountain.mntnHeight = mountainHeight.toInt()
                             mountain.mntnLocation = getTagValue("mntninfopoflc",eElement)
                             mountain.mntnImg = mountainImgUrl
                             mountain.mntnInfo = getTagValue("mntnsbttlinfo",eElement)
-                            mountain.courseInfo = getTagValue("crcmrsghtnginfoetcdscrt", eElement)
-                            mountain.top100reson = getTagValue("hndfmsmtnslctnrson",eElement)
-                            mountain.mntnDetailInfo = getTagValue("mntninfodtlinfocont", eElement)
+                            mountain.courseInfo = courseInfo
+                            mountain.top100reson = top100reson
+                            mountain.mntnDetailInfo =mntnDetailInfo
 
                             addItem(mountain)
                         }
@@ -208,8 +225,7 @@ class SearchViewModel(): BaseViewModel(){
                     response.invoke(true)
                 }
                 return@Thread
-            }
-        }.start()
+            }.start()
     }
   /* -------------산정보주제코드	산정보주제명----------
             01	계곡  -07

@@ -5,6 +5,10 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <queries>
+        <package android:name="com.kakao.talk" />
+    </queries>
+
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
@@ -15,15 +19,29 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         android:usesCleartextTraffic="true"
         tools:targetApi="n">
-        <activity android:name=".home.tab2.DetailMountainInfoActivity"></activity>
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.VIEW" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <!-- Redirect URI: "kakao{NATIVE_APP_KEY}://oauth“ -->
+                <data
+                    android:host="oauth"
+                    android:scheme="kakaob06197c7ca4f230f05a2bc7a0328bc94" />
             </intent-filter>
         </activity>
+        <activity android:name=".home.tab2.DetailMountainInfoActivity"></activity>
+        <activity android:name=".home.login.LoginActivity"
+            >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+        </activity>
+        <activity android:name=".MainActivity"/>
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_map" />

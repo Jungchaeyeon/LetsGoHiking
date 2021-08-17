@@ -41,5 +41,10 @@
       <option name="name" value="maven4" />
       <option name="url" value="https://esri.jfrog.io/artifactory/arcgis" />
     </remote-repository>
+    <remote-repository>
+      <option name="id" value="maven4" />
+      <option name="name" value="maven4" />
+      <option name="url" value="https://devrepo.kakao.com/nexus/content/groups/public/" />
+    </remote-repository>
   </component>
 </project>

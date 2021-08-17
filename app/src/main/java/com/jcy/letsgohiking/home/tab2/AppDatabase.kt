@@ -6,6 +6,8 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.jcy.letsgohiking.dao.HistoryDAO
 import com.jcy.letsgohiking.dao.MountainDao
+import com.jcy.letsgohiking.home.tab2.model.History
+import com.jcy.letsgohiking.home.tab2.model.MountainItem
 
 @Database(entities = [History::class, MountainItem::class],version = 5)
 abstract class AppDatabase : RoomDatabase(){

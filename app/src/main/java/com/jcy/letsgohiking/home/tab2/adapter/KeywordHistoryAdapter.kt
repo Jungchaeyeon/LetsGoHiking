@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.jcy.letsgohiking.databinding.ItemKeywordHistoryBinding
-import com.jcy.letsgohiking.home.tab2.History
+import com.jcy.letsgohiking.home.tab2.model.History
 
 class KeywordHistoryAdapter(val historyDeleteClickedListener:(String)->Unit): ListAdapter<History, KeywordHistoryAdapter.HistoryItemViewHolder>(
     diffUtil

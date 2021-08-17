@@ -1,19 +1,12 @@
 package com.jcy.letsgohiking.home.tab3
 
 import android.os.Bundle
-import android.view.View
-import androidx.recyclerview.widget.GridLayoutManager
 import com.hdh.base.fragment.BaseDataBindingFragment
 import com.jcy.letsgohiking.ActivityNavigator
 import com.jcy.letsgohiking.R
 import com.jcy.letsgohiking.databinding.FragmentBookmarkBinding
-import com.jcy.letsgohiking.databinding.FragmentHomeBinding
-import com.jcy.letsgohiking.databinding.FragmentSearchBinding
 import com.jcy.letsgohiking.home.tab2.AppDatabase
-import com.jcy.letsgohiking.home.tab2.MountainItem
-import com.jcy.letsgohiking.home.tab2.adapter.MountainAdapter
 import com.jcy.letsgohiking.home.tab2.adapter.MountainBookmarkAdapter
-import com.jcy.letsgohiking.home.tab2.getAppDatabase
 import com.jcy.letsgohiking.home.tab2.getAppDatabaseMntn
 import com.jcy.letsgohiking.util.Log
 import kotlinx.android.synthetic.main.fragment_bookmark.*

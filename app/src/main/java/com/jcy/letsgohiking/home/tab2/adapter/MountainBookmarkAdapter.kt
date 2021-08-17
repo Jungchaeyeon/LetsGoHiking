@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.jcy.letsgohiking.databinding.ItemBookmarkMntnBinding
-import com.jcy.letsgohiking.home.tab2.MountainItem
+import com.jcy.letsgohiking.home.tab2.model.MountainItem
 
 
 class MountainBookmarkAdapter(val callback:(MountainItem)->Unit): ListAdapter<MountainItem, MountainBookmarkAdapter.ItemViewHolder>(

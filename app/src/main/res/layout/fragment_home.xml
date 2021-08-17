@@ -1,23 +1,102 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <data>
 
         <variable
             name="vi"
             type="com.jcy.letsgohiking.home.tab1.HomeFragment" />
 
-    </data>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".home.tab1.HomeFragment">
+        <variable
+            name="vm"
+            type="com.jcy.letsgohiking.home.tab1.HomeViewModel" />
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    </data>
+
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="hello_home_fragment" />
+        tools:context=".home.tab1.HomeFragment">
 
-</FrameLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/pickYearButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#50000000"
+                android:drawableEnd="@drawable/ic_arrow_down"
+                android:fontFamily="@font/gaegu_bold"
+                android:gravity="center"
+                android:paddingVertical="10dp"
+                android:paddingEnd="20dp"
+                android:text="@{vm.liveYearList}"
+                android:textColor="@color/white"
+                android:textSize="32sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="2021년" />
+
+            <ImageView
+                android:id="@+id/mainBg"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/mountains_moon"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <LinearLayout
+                android:id="@+id/userInfoLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:layout_marginHorizontal="24dp"
+                android:paddingVertical="16dp"
+                android:background="@drawable/bg_main_userinfo"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/pickYearButton">
+
+                <ImageView
+                    android:id="@+id/userProfileImage"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginHorizontal="16dp" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/gaegu_light"
+                        android:text="@{vm.liveName}"
+                        android:textColor="@color/white"
+                        android:textSize="14sp"
+                        tools:text="정채연님의 등산기록" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/gaegu_light"
+                        android:text="@{vm.liveClass}"
+                        android:textColor="@color/white"
+                        android:textSize="14sp"
+                        tools:text="등급 : 등린이" />
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </FrameLayout>
 </layout>

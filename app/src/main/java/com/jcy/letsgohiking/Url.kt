@@ -6,4 +6,6 @@ object Url {
     const val GET_TMAP_LOCATION = "/tmap/pois"
 
     const val GET_TMAP_REVERSE_GEO_CODE = "/tmap/geo/reversegeocoding"
+
+    const val NAVER_URL = "https://openapi.naver.com"
 }

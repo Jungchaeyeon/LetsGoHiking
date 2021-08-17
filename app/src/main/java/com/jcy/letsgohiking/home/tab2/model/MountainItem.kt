@@ -1,4 +1,4 @@
-package com.jcy.letsgohiking.home.tab2
+package com.jcy.letsgohiking.home.tab2.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

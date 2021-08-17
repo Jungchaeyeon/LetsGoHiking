@@ -4,7 +4,7 @@ import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
-import com.jcy.letsgohiking.home.tab2.MountainItem
+import com.jcy.letsgohiking.home.tab2.model.MountainItem
 @Dao
 interface MountainDao{
     @Query("SELECT * FROM mountainItem")

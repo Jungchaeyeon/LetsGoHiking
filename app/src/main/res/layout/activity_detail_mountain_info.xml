@@ -10,7 +10,8 @@
             type="com.jcy.letsgohiking.home.tab2.DetailMountainInfoActivity" />
         <variable
             name="vm"
-            type="com.jcy.letsgohiking.home.tab2.model.DetailMountainViewModel" />
+            type="com.jcy.letsgohiking.home.tab2.DetailMountainViewModel" />
+
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -69,6 +70,31 @@
                     app:tint="@color/black"
                     android:onClick="@{(view) ->vi.onClickBookmark(view)}"/>
 
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/mntnImageList"
+                    replaceAll="@{vm.liveMountainImageItems}"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingTop="5dp"
+                    android:layout_marginTop="16dp"
+                    app:layout_constraintBottom_toTopOf="@id/noticeNaverImg"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/mntnName" />
+                <TextView
+                    android:id="@+id/noticeNaverImg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="10dp"
+                    android:includeFontPadding="false"
+                    android:layout_marginStart="24dp"
+                    android:paddingTop="3dp"
+                    app:layout_constraintTop_toBottomOf="@id/mntnImageList"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:text="@string/notice_naver_image"/>
+
                 <ImageView
                     android:id="@+id/mntnLogoHeight"
                     android:layout_width="20dp"
@@ -91,7 +117,7 @@
                     android:includeFontPadding="false"
                     android:text="산 높이"
                     app:layout_constraintStart_toEndOf="@id/mntnLogoHeight"
-                    app:layout_constraintTop_toBottomOf="@id/mntnName" />
+                    app:layout_constraintTop_toBottomOf="@id/noticeNaverImg" />
 
                 <TextView
                     android:id="@+id/mntnHeightValue"

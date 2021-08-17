@@ -15,6 +15,7 @@ import com.jcy.letsgohiking.databinding.FragmentRecommendCourseBinding
 import com.jcy.letsgohiking.databinding.ItemAreaKeywordBinding
 import com.jcy.letsgohiking.home.tab2.adapter.MountainAdapter
 import com.jcy.letsgohiking.home.tab2.model.Area
+import com.jcy.letsgohiking.home.tab2.model.MountainItem
 import com.jcy.letsgohiking.util.Log
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 

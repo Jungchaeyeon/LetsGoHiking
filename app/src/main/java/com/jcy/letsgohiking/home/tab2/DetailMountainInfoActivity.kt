@@ -14,21 +14,30 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.hdh.base.activity.BaseDataBindingActivity
-import com.jcy.letsgohiking.ActivityNavigator
-import com.jcy.letsgohiking.R
-import com.jcy.letsgohiking.SampleToast
+import com.hdh.base.recycler.BaseDataBindingRecyclerViewAdapter
+import com.jcy.letsgohiking.*
 import com.jcy.letsgohiking.databinding.ActivityDetailMountainInfoBinding
+import com.jcy.letsgohiking.databinding.ItemAreaKeywordBinding
+import com.jcy.letsgohiking.databinding.ItemMntnImageBinding
+import com.jcy.letsgohiking.ext.loadUrl
 
 import com.jcy.letsgohiking.home.tab2.adapter.SearchRecyclerAdapter
-import com.jcy.letsgohiking.home.tab2.model.DetailMountainViewModel
-import com.jcy.letsgohiking.home.tab2.model.LocationLatLngEntity
-import com.jcy.letsgohiking.home.tab2.model.SearchResultEntity
+import com.jcy.letsgohiking.home.tab2.model.*
 import com.jcy.letsgohiking.home.tab2.search.Poi
 import com.jcy.letsgohiking.home.tab2.search.Pois
+import com.jcy.letsgohiking.network.api.Api
 import com.jcy.letsgohiking.util.RetrofitUtil
 import kotlinx.android.synthetic.main.bottom_sheet.*
 import kotlinx.coroutines.*
+import okhttp3.Interceptor
+import okhttp3.OkHttpClient
 import org.koin.android.viewmodel.ext.android.viewModel
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import java.io.IOException
 import kotlin.coroutines.CoroutineContext
 
 class DetailMountainInfoActivity :
@@ -43,10 +52,6 @@ class DetailMountainInfoActivity :
     private lateinit var map: GoogleMap
     private lateinit var searchResult: SearchResultEntity
     private var isBookmarked = false
-
-    //안드로이드에서 위치정보를 불러올 때 관리해주는 utility 클래스
-    private lateinit var locationManager: LocationManager
-
     private val viewModel by viewModel<DetailMountainViewModel>()
     private lateinit var adapter: SearchRecyclerAdapter
     private lateinit var mntn: MountainItem
@@ -73,8 +78,33 @@ class DetailMountainInfoActivity :
         initAdapter()
         initViews()
         initData()
+        getMountainImages(mntn.mntnName)
         searchKeyword(mntn.mntnName)
+
     }
+    private fun getMountainImages(mntnName: String){
+        viewModel.getMountainImages(mntnName){ isSuccessful ->
+            if(isSuccessful){
+                Log.e("mountainList 데이터확인", viewModel.liveMountainImageItems.value.toString())
+
+                binding.mntnImageList.run {
+                    adapter = BaseDataBindingRecyclerViewAdapter<String>()
+                        .setItemViewType { item, position, isLast ->
+                            // if (position == 0) 0 else 1
+                            if(position ==0) 0 else 0
+
+                        }
+                        .addViewType(
+                            BaseDataBindingRecyclerViewAdapter.MultiViewType<String, ItemMntnImageBinding>(R.layout.item_mntn_image) {
+                                this.imgView.loadUrl(it)
+                            })
+                }
+            }
+            else{
+
+            }
+        }
+        }
 
     private fun searchKeyword(keyword: String){
         launch(coroutineContext) {
