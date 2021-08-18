@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.jcy.letsgohiking.databinding.ItemKeywordHistoryBinding
 import com.jcy.letsgohiking.home.tab2.model.History
 
-class KeywordHistoryAdapter(val historyDeleteClickedListener:(String)->Unit): ListAdapter<History, KeywordHistoryAdapter.HistoryItemViewHolder>(
+class KeywordHistoryAdapter(val setKeywordListener:(String)->Unit, val historyDeleteClickedListener:(String)->Unit): ListAdapter<History, KeywordHistoryAdapter.HistoryItemViewHolder>(
     diffUtil
 ) {
     inner class HistoryItemViewHolder(val binding: ItemKeywordHistoryBinding): RecyclerView.ViewHolder(binding.root) {
@@ -16,6 +16,9 @@ class KeywordHistoryAdapter(val historyDeleteClickedListener:(String)->Unit): Li
             binding.keyword.text = history.mntnName
             binding.deleteBtn.setOnClickListener {
                 historyDeleteClickedListener(history.mntnName.orEmpty())
+            }
+            binding.keyword.setOnClickListener {
+                setKeywordListener(history.mntnName)
             }
         }
     }

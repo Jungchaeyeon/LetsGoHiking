@@ -57,7 +57,7 @@
                     android:layout_height="16dp"
                     android:layout_marginStart="8dp"
                     android:backgroundTint="@color/gray"
-                    android:src="@drawable/ic_baseline_arrow_forward_ios_24"
+                    android:src="@drawable/ic_arrow_right"
                     />
             </LinearLayout>
             <View

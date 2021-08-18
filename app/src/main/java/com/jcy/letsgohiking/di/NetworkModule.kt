@@ -1,5 +1,8 @@
 package com.jcy.letsgohiking.di
 
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import com.jcy.letsgohiking.BuildConfig
 import com.jcy.letsgohiking.network.adapter.ApiCallAdapterFactory
 import com.jcy.letsgohiking.network.api.Api
@@ -29,17 +32,4 @@ val networkModule = module {
     single { (get() as Retrofit).create(Api::class.java) }
     single { ConnectivityHelper.get(androidContext()) }
 
-}
-fun getFirebaseNetworkModule(url: String): Module = module {
-    single {
-        OkHttpClient.createOkHttpClient()
-    }
-    single {
-        Retrofit.Builder()
-            .client(get())
-            .addConverterFactory(GsonConverterFactory.create())
-            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-            .baseUrl(url)
-            .build()
-    }
 }

@@ -1,6 +1,7 @@
 package com.jcy.letsgohiking.home.tab2
 
 import android.annotation.SuppressLint
+import android.text.method.Touch
 import android.view.*
 import android.widget.Toast
 import androidx.core.view.isVisible
@@ -32,12 +33,11 @@ class SearchFragment : BaseDataBindingFragment<FragmentSearchBinding>(R.layout.f
     companion object {
         fun getInstance() = SearchFragment()
     }
-
-
     lateinit var viewPager : ViewPager2
     lateinit var tabLayouts: TabLayout
 
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun FragmentSearchBinding.onBind() {
         vi = this@SearchFragment
         vm = viewModel
@@ -45,12 +45,17 @@ class SearchFragment : BaseDataBindingFragment<FragmentSearchBinding>(R.layout.f
         initHistoryRecyclerView()
         db = getAppDatabase(requireContext())
         setUpViewPager()
-
     }
 
     private fun initHistoryRecyclerView() {
-        historyAdapter = KeywordHistoryAdapter(historyDeleteClickedListener = {
+
+        historyAdapter = KeywordHistoryAdapter(
+            setKeywordListener = {
+               binding.searchEdt.setText(it)
+            },
+            historyDeleteClickedListener = {
             deleteSearchKeyword(it)
+            showHistoryView()
         })
         binding.historyRecyclerView.adapter = historyAdapter
         binding.historyRecyclerView.layoutManager = LinearLayoutManager(requireActivity())
@@ -101,13 +106,12 @@ class SearchFragment : BaseDataBindingFragment<FragmentSearchBinding>(R.layout.f
 
     fun onClickSearch(_keyword: String) {
         val keyword = _keyword.trim()
-
+        binding.progressBar.isVisible = true
         if (keyword != "") {
-
             hideHistoryView()
             binding.searchEdt.text.clear()
             binding.searchEdt.hideKeyboard()
-            binding.historyRecyclerView.isVisible = false
+            binding.historyKeywordLayout.isVisible = false
 
             viewModel.onClickSearch(requireActivity(), keyword) { isSuccessful ->
                 if(viewModel.mountainArray.isNotEmpty()) {
@@ -117,6 +121,7 @@ class SearchFragment : BaseDataBindingFragment<FragmentSearchBinding>(R.layout.f
                                 isSuccessful,
                                 viewModel.mountainArray
                             )
+                            binding.progressBar.isVisible = false
                         }
                 }
                 else{
@@ -125,6 +130,7 @@ class SearchFragment : BaseDataBindingFragment<FragmentSearchBinding>(R.layout.f
                 findKeywordInHistory(keyword, callback = { hasKeyword->
                    if(hasKeyword){
                        deleteSearchKeyword(keyword)
+                       Thread.sleep(1000)
                        saveSearchKeyword(keyword)
                    }else{
                        saveSearchKeyword(keyword)
@@ -153,7 +159,6 @@ class SearchFragment : BaseDataBindingFragment<FragmentSearchBinding>(R.layout.f
     private fun deleteSearchKeyword(keyword: String) {
         Thread {
             db.historyDao().delete(keyword = keyword)
-            showHistoryView()
         }.start()
     }
 
@@ -161,16 +166,19 @@ class SearchFragment : BaseDataBindingFragment<FragmentSearchBinding>(R.layout.f
         Thread {
             val keywords = db.historyDao().getAll().reversed()
             requireActivity().runOnUiThread {
-                binding.historyRecyclerView.isVisible = true
-                historyAdapter.submitList(keywords.orEmpty())
-                binding.historyRecyclerView.isVisible = true
+                if(keywords.isEmpty()) binding.historyKeywordLayout.isVisible = false
+                else{
+                    historyAdapter.submitList(keywords)
+                    historyAdapter.notifyDataSetChanged()
+                    binding.historyKeywordLayout.isVisible = true
+                }
             }
         }.start()
     }
 
     private fun hideHistoryView() {
         requireActivity().runOnUiThread {
-            binding.historyRecyclerView.isVisible = false
+            binding.historyKeywordLayout.isVisible = false
         }
     }
 
@@ -178,6 +186,9 @@ class SearchFragment : BaseDataBindingFragment<FragmentSearchBinding>(R.layout.f
         Thread {
             db.historyDao().insertHistory(History(null, keyword))
         }.start()
+    }
+    fun onClickBack(){
+        binding.historyKeywordLayout.isVisible = false
     }
 
 }

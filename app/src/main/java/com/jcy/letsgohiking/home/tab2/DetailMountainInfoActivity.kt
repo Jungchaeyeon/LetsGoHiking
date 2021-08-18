@@ -1,6 +1,5 @@
 package com.jcy.letsgohiking.home.tab2
 
-import android.location.LocationManager
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -13,31 +12,26 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.firebase.database.*
+import com.google.firebase.database.ktx.database
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.ktx.Firebase
 import com.hdh.base.activity.BaseDataBindingActivity
 import com.hdh.base.recycler.BaseDataBindingRecyclerViewAdapter
 import com.jcy.letsgohiking.*
+import com.jcy.letsgohiking.R
 import com.jcy.letsgohiking.databinding.ActivityDetailMountainInfoBinding
-import com.jcy.letsgohiking.databinding.ItemAreaKeywordBinding
 import com.jcy.letsgohiking.databinding.ItemMntnImageBinding
 import com.jcy.letsgohiking.ext.loadUrl
-
+import com.jcy.letsgohiking.home.tab2.adapter.MountainReviewAdapter
 import com.jcy.letsgohiking.home.tab2.adapter.SearchRecyclerAdapter
 import com.jcy.letsgohiking.home.tab2.model.*
 import com.jcy.letsgohiking.home.tab2.search.Poi
 import com.jcy.letsgohiking.home.tab2.search.Pois
-import com.jcy.letsgohiking.network.api.Api
 import com.jcy.letsgohiking.util.RetrofitUtil
 import kotlinx.android.synthetic.main.bottom_sheet.*
 import kotlinx.coroutines.*
-import okhttp3.Interceptor
-import okhttp3.OkHttpClient
 import org.koin.android.viewmodel.ext.android.viewModel
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
-import java.io.IOException
 import kotlin.coroutines.CoroutineContext
 
 class DetailMountainInfoActivity :
@@ -54,7 +48,11 @@ class DetailMountainInfoActivity :
     private var isBookmarked = false
     private val viewModel by viewModel<DetailMountainViewModel>()
     private lateinit var adapter: SearchRecyclerAdapter
+    private lateinit var reviewAdapter: MountainReviewAdapter
     private lateinit var mntn: MountainItem
+    private lateinit var reviewList : ArrayList<Review>
+    private lateinit var firebaseDB : DatabaseReference
+
     private val locationRecyclerVeiw: RecyclerView by lazy{
         findViewById(R.id.locationListRv)
     }
@@ -74,13 +72,29 @@ class DetailMountainInfoActivity :
         viewModel.bindLifecycle(this@DetailMountainInfoActivity)
         db = getAppDatabaseMntn(applicationContext)
         job = Job()
+        reviewList = ArrayList()
 
         initAdapter()
         initViews()
         initData()
         getMountainImages(mntn.mntnName)
+        getMountainReviews(mntn.mntnName)
         searchKeyword(mntn.mntnName)
 
+    }
+    fun getMountainReviews(mntnName: String){
+        firebaseDB =  Firebase.database.reference
+        viewModel.getMountainReview(mntnName){
+            if(it){
+                reviewList = viewModel.reviewList
+                if(reviewList.size >0) binding.noReviewNotice.isVisible = false
+                reviewAdapter.submitList(reviewList.takeLast(3))
+                reviewAdapter.notifyDataSetChanged()
+            }
+            else{
+                binding.noReviewNotice.isVisible = true
+            }
+        }
     }
     private fun getMountainImages(mntnName: String){
         viewModel.getMountainImages(mntnName){ isSuccessful ->
@@ -90,9 +104,7 @@ class DetailMountainInfoActivity :
                 binding.mntnImageList.run {
                     adapter = BaseDataBindingRecyclerViewAdapter<String>()
                         .setItemViewType { item, position, isLast ->
-                            // if (position == 0) 0 else 1
                             if(position ==0) 0 else 0
-
                         }
                         .addViewType(
                             BaseDataBindingRecyclerViewAdapter.MultiViewType<String, ItemMntnImageBinding>(R.layout.item_mntn_image) {
@@ -100,9 +112,7 @@ class DetailMountainInfoActivity :
                             })
                 }
             }
-            else{
-
-            }
+            else{}
         }
         }
 
@@ -175,9 +185,6 @@ class DetailMountainInfoActivity :
             binding.mntnHikingPointViewGroup.isVisible = true
         }
         setBookmarkBtn()
-//        Glide.with(applicationContext)
-//            .load(viewModel.liveMountainItem.value?.mntnImg)
-//            .into(binding.mntnImageView)
     }
     private fun setBookmarkBtn(){
         Thread{
@@ -210,8 +217,13 @@ class DetailMountainInfoActivity :
     private fun initAdapter(){
         adapter = SearchRecyclerAdapter()
         locationRecyclerVeiw.adapter = adapter
+        reviewAdapter = MountainReviewAdapter()
+        binding.previewRecyclerView.adapter = reviewAdapter
     }
 
+    fun onClickShowMoreReview(){
+        ActivityNavigator.with(this).review(mntn.mntnName).start()
+    }
     override fun onMapReady(map: GoogleMap) {
         this.map = map
         currentSelectMarker = setupMarker(searchResult)

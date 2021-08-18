@@ -4,11 +4,16 @@ import android.media.Image
 import android.widget.ImageView
 import androidx.core.net.toUri
 import androidx.lifecycle.MutableLiveData
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ktx.database
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.ktx.Firebase
 import com.hdh.base.viewmodel.BaseViewModel
 import com.jcy.letsgohiking.Key
 import com.jcy.letsgohiking.Url
 import com.jcy.letsgohiking.home.tab2.model.MountainItem
 import com.jcy.letsgohiking.home.tab2.model.ResultSearchImage
+import com.jcy.letsgohiking.home.tab2.model.Review
 import com.jcy.letsgohiking.network.api.Api
 import com.jcy.letsgohiking.repository.ApiRepository
 import com.jcy.letsgohiking.util.Log
@@ -23,9 +28,24 @@ class DetailMountainViewModel(): BaseViewModel() {
     val liveMountainItem = MutableLiveData<MountainItem>()
     val liveMountainImageItems = MutableLiveData<ArrayList<String>>()
     val mountainImageViewList = arrayListOf<String>()
+    val fireStoreDB = FirebaseFirestore.getInstance()
+    val reviewList = ArrayList<Review>()
 
     fun addAllItems(){
         liveMountainImageItems.value = mountainImageViewList
+    }
+    fun getMountainReview(mntnName: String, respon: (Boolean) -> Unit){
+        fireStoreDB.collection(mntnName).addSnapshotListener { list, error ->
+            reviewList.clear()
+            if(list == null) respon.invoke(false)
+            for(data in list!!.documents){
+                var review = data.toObject(Review::class.java)
+                if (review != null) {
+                    reviewList.add(review)
+                }
+            }
+            respon.invoke(true)
+        }
     }
 
     fun getMountainImages(mntnName: String, respon: (Boolean) -> Unit ){

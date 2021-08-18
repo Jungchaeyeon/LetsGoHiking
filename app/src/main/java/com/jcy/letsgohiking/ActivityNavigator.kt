@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import com.jcy.letsgohiking.home.login.LoginActivity
 import com.jcy.letsgohiking.home.tab2.DetailMountainInfoActivity
 import com.jcy.letsgohiking.home.tab2.model.MountainItem
+import com.jcy.letsgohiking.home.tab2.MountainReviewActivity
 import java.util.*
 
 /**
@@ -30,6 +31,7 @@ class ActivityNavigator private constructor(private val context: Context) {
     fun main(isClear: Boolean = true) = MyIntent(MainActivity::class.java, isClear)
     fun login() = MyIntent(LoginActivity::class.java)
     fun todetailmountainpage(mntnModel: MountainItem) = MyIntent(DetailMountainInfoActivity::class.java).apply { putExtra(KEY_DATA,mntnModel) }
+    fun review(mntnName: String) = MyIntent(MountainReviewActivity::class.java).apply { putExtra(KEY_DATA,mntnName) }
 
 
 

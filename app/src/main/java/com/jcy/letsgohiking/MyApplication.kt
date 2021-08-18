@@ -2,7 +2,6 @@ package com.jcy.letsgohiking
 
 import android.app.Application
 import com.facebook.stetho.Stetho
-import com.jcy.letsgohiking.di.getFirebaseNetworkModule
 import com.jcy.letsgohiking.di.networkModule
 import com.jcy.letsgohiking.di.repositoryModule
 import com.jcy.letsgohiking.di.viewModelModule

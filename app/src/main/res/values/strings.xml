@@ -19,4 +19,8 @@
     <string name="moreInfo">더보기</string>
     <string name="manageAccount">계정관리</string>
     <string name="logout">로그아웃</string>
+    <string name="noRegisteredReview">아직 등록된 리뷰가 없습니다.</string>
+    <string name="showHikingReview">등산 후기 살펴보기</string>
+    <string name="register">등록</string>
+    <string name="plz_write_review">리뷰를 작성해주세요.</string>
 </resources>
