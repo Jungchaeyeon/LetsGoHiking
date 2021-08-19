@@ -18,8 +18,9 @@ data class MountainItem(
     @ColumnInfo @SerializedName("hndfmsmtnslctnrson") var top100reson : String,
     @ColumnInfo @SerializedName("mntninfodtlinfocont") var mntnDetailInfo : String,
     @ColumnInfo @SerializedName("crcmrsghtnginfoetcdscrt") var courseInfo : String,
-    @ColumnInfo var isBookmarked : Boolean = false
+    @ColumnInfo var isBookmarked : Boolean = false,
+    @ColumnInfo var isRecorded : Boolean = false
     ) :Serializable{
-        constructor() : this(0,"", 0, "", "", "","","","",false)
+        constructor() : this(0,"", 0, "", "", "","","","",false,false)
     }
 

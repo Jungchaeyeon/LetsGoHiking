@@ -214,6 +214,9 @@ class DetailMountainInfoActivity :
             SampleToast.createToast(this, "북마크에서 삭제되었습니다.")?.show()
         }
     }
+    fun onClickRecord(){
+       ActivityNavigator.with(this).hikingrecord(mntn.mntnName).start()
+    }
     private fun initAdapter(){
         adapter = SearchRecyclerAdapter()
         locationRecyclerVeiw.adapter = adapter

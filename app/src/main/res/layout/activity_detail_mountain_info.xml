@@ -60,6 +60,17 @@
                     tools:text="산 이름" />
 
                 <ImageView
+                    android:id="@+id/hikingRecordBtn"
+                    android:layout_width="26dp"
+                    android:layout_height="26dp"
+                    android:layout_marginEnd="16dp"
+                    android:src="@drawable/ic_record_pen_selector"
+                    app:layout_constraintBottom_toBottomOf="@id/bookmarkBtn"
+                    app:layout_constraintEnd_toStartOf="@id/bookmarkBtn"
+                    app:layout_constraintTop_toTopOf="@id/bookmarkBtn"
+                    android:onClick="@{()->vi.onClickRecord()}"/>
+
+                <ImageView
                     android:id="@+id/bookmarkBtn"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
@@ -107,18 +118,19 @@
                     android:text="한줄 리뷰 살펴보기"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/noticeNaverImg" />
+
                 <TextView
                     android:id="@+id/moreReview"
                     style="@style/mountainInfoContent"
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
-                    android:padding="8dp"
                     android:layout_marginTop="16dp"
-                    android:text="@string/moreInfo"
                     android:drawableEnd="@drawable/ic_arrow_right"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    android:onClick="@{()->vi.onClickShowMoreReview()}"
+                    android:padding="8dp"
+                    android:text="@string/moreInfo"
                     app:layout_constraintBottom_toBottomOf="@id/showReviewTitle"
-                    android:onClick="@{()->vi.onClickShowMoreReview()}"/>
+                    app:layout_constraintEnd_toEndOf="parent" />
 
                 <LinearLayout
                     android:id="@+id/reviewLayout"
@@ -132,22 +144,23 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/showReviewTitle">
 
-                   <androidx.recyclerview.widget.RecyclerView
-                       android:id="@+id/previewRecyclerView"
-                       android:layout_width="match_parent"
-                       android:layout_height="wrap_content"
-                       android:orientation="vertical"
-                       app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/previewRecyclerView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
                     <TextView
                         android:id="@+id/noReviewNotice"
                         style="@style/mountainInfoContent"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:visibility="visible"
                         android:layout_marginVertical="4dp"
                         android:background="@drawable/item_review_bg"
                         android:padding="8dp"
-                        android:text="@string/noRegisteredReview"/>
+                        android:text="@string/noRegisteredReview"
+                        android:visibility="visible" />
                 </LinearLayout>
 
                 <ImageView
