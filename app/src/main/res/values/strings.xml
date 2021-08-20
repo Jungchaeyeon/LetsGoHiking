@@ -23,4 +23,5 @@
     <string name="showHikingReview">등산 후기 살펴보기</string>
     <string name="register">등록</string>
     <string name="plz_write_review">리뷰를 작성해주세요.</string>
+    <string name="who_with">누구랑: </string>
 </resources>

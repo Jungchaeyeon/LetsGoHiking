@@ -55,14 +55,14 @@ buildscript {
 
     ext {
         //Dev
-        appNameDev = "MakeUs-DEV"
+        appNameDev = "이번주 등산고?-dev"
         apiUrlDev = "\"http://api.visitkorea.or.kr/\""
         kakaoAppKeyDev = "\"b06197c7ca4f230f05a2bc7a0328bc94\""
         kakaoOauthAppKeyDev = "\"kakaob06197c7ca4f230f05a2bc7a0328bc94\""
         manifestPlaceholdersDev = [KAKAO_APP_KEY : "b06197c7ca4f230f05a2bc7a0328bc94" , KAKAO_OAUTH_APP_KEY : "kakaob06197c7ca4f230f05a2bc7a0328bc94"]
 
         //Stage
-        appNameStage = "MakeUs-Stage"
+        appNameStage = "이번주 등산고?"
         apiUrlStage = "\"http://api.visitkorea.or.kr/\""
         kakaoAppKeyStage = "\"b06197c7ca4f230f05a2bc7a0328bc94\""
         kakaoOauthAppKeyStage = "\"kakaob06197c7ca4f230f05a2bc7a0328bc94\""
@@ -70,7 +70,7 @@ buildscript {
 
 
         //Real
-        appName = "MakeUs"
+        appName = "이번주 등산고?"
         apiUrl = "\"http://api.visitkorea.or.kr/\""
         kakaoAppKey = "\"b06197c7ca4f230f05a2bc7a0328bc94\""
         kakaoOauthAppKey = "\"kakaob06197c7ca4f230f05a2bc7a0328bc94\""

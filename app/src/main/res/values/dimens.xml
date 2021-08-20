@@ -2,4 +2,6 @@
 <resources>
     <dimen name="pageMargin">7dp</dimen>
     <dimen name="pageOffset">120dp</dimen>
+    <dimen name="list_item_spacing">16dp</dimen>
+    <dimen name="list_item_spacing_half">8dp</dimen>
 </resources>

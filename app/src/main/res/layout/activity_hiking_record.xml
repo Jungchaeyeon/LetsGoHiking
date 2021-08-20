@@ -14,87 +14,202 @@
             type="com.jcy.letsgohiking.home.record.model.RecordViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <RelativeLayout
+        android:id="@+id/recordLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/dark_gray"
-        tools:context=".home.record.HikingRecordActivity">
+        android:layout_height="match_parent">
 
-        <LinearLayout
-            android:id="@+id/recordHeadLayout"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:layout_height="match_parent"
+            android:background="@color/dark_gray"
+            tools:context=".home.record.HikingRecordActivity">
 
-            <ImageView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/recordHeadLayout"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:onClick="@{()->vi.onClickBack()}"
-                android:padding="16dp"
-                android:src="@drawable/ic_arrow_back" />
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-            <View
-                android:layout_width="wrap_content"
-                android:layout_height="1dp"
-                android:layout_weight="1" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="@{()->vi.onClickBack()}"
+                    android:padding="16dp"
+                    android:src="@drawable/ic_arrow_back" />
 
-            <TextView
-                style="@style/mountainInfoTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="@{vm.recordTitle}"
-                android:textColor="@color/white"
-                tools:text="북한산" />
+                <View
+                    android:layout_width="wrap_content"
+                    android:layout_height="1dp"
+                    android:layout_weight="2" />
 
-            <View
-                android:layout_width="wrap_content"
-                android:layout_height="1dp"
-                android:layout_weight="1" />
+                <TextView
+                    style="@style/mountainInfoTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@{vm.recordTitle}"
+                    android:textColor="@color/white"
+                    tools:text="북한산" />
 
-            <TextView
-                style="@style/mountainInfoContent"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="@{()->vi.onClickSave()}"
-                android:padding="12dp"
-                android:text="@string/save"
-                android:textColor="@color/white"
-                android:textSize="16sp" />
-        </LinearLayout>
+                <View
+                    android:layout_width="wrap_content"
+                    android:layout_height="1dp"
+                    android:layout_weight="1.5" />
 
-        <EditText
-            android:id="@+id/content"
+                <!--            <TextView-->
+                <!--                style="@style/mountainInfoContent"-->
+                <!--                android:layout_width="wrap_content"-->
+                <!--                android:layout_height="wrap_content"-->
+                <!--                android:padding="12dp"-->
+                <!--                android:text="@string/save"-->
+                <!--                android:textColor="@color/white"-->
+                <!--                android:textSize="16sp" />-->
+            </LinearLayout>
+        <androidx.core.widget.NestedScrollView
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginHorizontal="24dp"
-            android:layout_marginTop="40dp"
-            android:layout_marginBottom="24dp"
-            android:background="@drawable/btn_recycle_item"
-            android:gravity="left"
-            android:maxLines="20"
-            android:paddingHorizontal="12dp"
-            android:paddingTop="40dp"
-            android:text="@{vm.recordContent}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/recordHeadLayout"
-            tools:text="adsfasdffffffffffffffdddddddddddddddddddddddddddddddddddddddddddddddddddsdffffffffffffffffffddddddddd" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+            <LinearLayout
+                android:id="@+id/contentLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="24dp"
+                android:background="@drawable/btn_recycle_item"
+                android:orientation="vertical"
+                android:padding="3dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/recordHeadLayout">
 
-        <TextView
-            style="@style/mountainInfoContent"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="@{vm.recordDate}"
-            android:textColor="@color/black"
-            app:layout_constraintStart_toStartOf="@id/content"
-            app:layout_constraintTop_toTopOf="@id/content"
-            tools:text="2021-08-20 13:30:35" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                <TextView
+                    style="@style/mountainInfoContent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:padding="8dp"
+                    android:text="@{vm.recordDate}"
+                    android:textColor="@color/black"
+                    app:layout_constraintStart_toStartOf="@id/content"
+                    app:layout_constraintTop_toTopOf="@id/content"
+                    tools:text="글 작성시각: 2021-08-20 13:30:35" />
+
+                <TextView
+                    android:id="@+id/hikingDate"
+                    style="@style/mountainInfoContent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/ic_timetable"
+                    android:drawableEnd="@drawable/ic_baseline_arrow_drop_down_20"
+                    android:drawablePadding="8dp"
+                    android:onClick="@{()->vi.onClickDatePicker()}"
+                    android:padding="8dp"
+                    android:text="@{vm.hikingDate}"
+                    android:textColor="@color/black"
+                    app:layout_constraintStart_toStartOf="@id/content"
+                    app:layout_constraintTop_toTopOf="@id/content"
+                    tools:text="등산일: 2021년 8월 19일" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/mountainInfoContent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="0dp"
+                        android:drawableStart="@drawable/ic_user_who_with"
+                        android:drawablePadding="8dp"
+                        android:gravity="center_vertical"
+                        android:includeFontPadding="false"
+                        android:padding="8dp"
+                        android:text="@string/who_with"
+                        android:textColor="@color/black"
+                        app:layout_constraintStart_toStartOf="@id/content"
+                        app:layout_constraintTop_toTopOf="@id/content" />
+
+                    <EditText
+                        android:id="@+id/hikingWith"
+                        style="@style/mountainInfoContent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="0dp"
+                        android:background="@color/trans"
+                        android:focusable="true"
+                        android:focusedByDefault="false"
+                        android:focusableInTouchMode="true"
+                        android:hint="누구와 함께 등산했나요?"
+                        android:text="@{vm.hikingWith}" />
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/hikingImg"
+                    android:layout_width="250dp"
+                    android:layout_height="250dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="4dp"
+                    android:visibility="gone"
+                    tools:visibility="visible" />
+
+                <EditText
+                    android:id="@+id/content"
+                    style="@style/mountainInfoContent"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginHorizontal="8dp"
+                    android:layout_marginBottom="24dp"
+                    android:background="@color/trans"
+                    android:gravity="left"
+                    android:paddingTop="8dp"
+                    android:lines="10"
+                    android:maxLines="20"
+                    android:paddingHorizontal="12dp"
+                    android:text="@{vm.recordContent}"
+                    tools:text="안녕하세요 여기는 글 작성공간입니다. 남은 개발도 파이팅!" />
+
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/white">
+
+            <ImageButton
+                android:id="@+id/pickImageBtn"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:backgroundTint="@color/trans"
+                android:onClick="@{()->vi.onClickGetImage()}"
+                android:padding="8dp"
+                android:src="@drawable/ic_image" />
+
+            <ImageButton
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:backgroundTint="@color/trans"
+                android:onClick="@{()->vi.onClickSave()}"
+                android:padding="8dp"
+                android:src="@drawable/ic_baseline_check_24" />
+        </RelativeLayout>
+    </RelativeLayout>
 </layout>

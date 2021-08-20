@@ -4,6 +4,7 @@
     package="com.jcy.letsgohiking">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
     <queries>
         <package android:name="com.kakao.talk" />
@@ -19,7 +20,8 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         android:usesCleartextTraffic="true"
         tools:targetApi="n">
-        <activity android:name=".home.record.HikingRecordActivity"></activity>
+        <activity android:name=".home.record.HikingRecordActivity"
+            android:windowSoftInputMode="adjustResize"/>
         <activity android:name=".home.tab2.MountainReviewActivity" />
         <activity android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity">
             <intent-filter>

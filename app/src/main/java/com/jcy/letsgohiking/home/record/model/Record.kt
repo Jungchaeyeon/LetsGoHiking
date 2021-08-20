@@ -9,7 +9,10 @@ import java.io.Serializable
 data class Record (
     @PrimaryKey var mntnName: String="",
     @ColumnInfo var rid: String= "",
+    @ColumnInfo var hikingDate: String="",
+    @ColumnInfo var hikingWith: String="",
+    @ColumnInfo var hikingImg: String="",
     @ColumnInfo var content: String="",
 ): Serializable {
-    constructor() : this("","","")
+    constructor() : this("","","","","","")
 }
