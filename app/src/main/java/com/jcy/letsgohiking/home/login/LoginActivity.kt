@@ -15,6 +15,7 @@ import com.jcy.letsgohiking.R
 import com.jcy.letsgohiking.databinding.ActivityLoginBinding
 import com.jcy.letsgohiking.repository.local.LocalKey
 import com.jcy.letsgohiking.repository.local.RepositoryCached
+import com.kakao.sdk.common.util.Utility
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -30,6 +31,8 @@ class LoginActivity : BaseDataBindingActivity<ActivityLoginBinding>(R.layout.act
         vi= this@LoginActivity
         viewModel.bindLifecycle(this@LoginActivity)
 
+        val keyHash = Utility.getKeyHash(this@LoginActivity)
+        Log.e("Hash", keyHash)
         functions = Firebase.functions
         initViews()
         checkLoginSession()

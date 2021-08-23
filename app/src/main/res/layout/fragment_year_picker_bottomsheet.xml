@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="vi"
+            type="com.jcy.letsgohiking.home.tab1.YearPickerBottomsheetFragment" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        style="@style/BottomLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:id="@+id/headLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/btn_cancle"
+                style="@style/mountainInfoContent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:onClick="@{()->vi.onClickCancel()}"
+                android:padding="8dp"
+                android:text="취소"
+                android:textColor="#9d9d9d" />
+
+            <TextView
+                android:id="@+id/btn_done"
+                style="@style/mountainInfoContent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="16dp"
+                android:onClick="@{()->vi.onClickOk()}"
+                android:padding="8dp"
+                android:text="완료"
+                android:textColor="#3e3e3e" />
+        </RelativeLayout>
+
+        <NumberPicker
+            android:id="@+id/yearPicker"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/headLayout" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -1,23 +1,15 @@
 package com.jcy.letsgohiking.home.tab2
 
-import android.media.Image
-import android.widget.ImageView
-import androidx.core.net.toUri
 import androidx.lifecycle.MutableLiveData
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.ktx.database
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.ktx.Firebase
 import com.hdh.base.viewmodel.BaseViewModel
-import com.jcy.letsgohiking.Key
 import com.jcy.letsgohiking.Url
 import com.jcy.letsgohiking.home.tab2.model.MountainItem
+import com.jcy.letsgohiking.home.tab2.model.NaverSearchImage
 import com.jcy.letsgohiking.home.tab2.model.ResultSearchImage
 import com.jcy.letsgohiking.home.tab2.model.Review
 import com.jcy.letsgohiking.network.api.Api
-import com.jcy.letsgohiking.repository.ApiRepository
 import com.jcy.letsgohiking.util.Log
-import okhttp3.HttpUrl.Companion.toHttpUrl
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -26,8 +18,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class DetailMountainViewModel(): BaseViewModel() {
     val liveMountainItem = MutableLiveData<MountainItem>()
-    val liveMountainImageItems = MutableLiveData<ArrayList<String>>()
-    val mountainImageViewList = arrayListOf<String>()
+    val liveMountainImageItems = MutableLiveData<ArrayList<NaverSearchImage>>()
+    val mountainImageViewList = arrayListOf<NaverSearchImage>()
     val fireStoreDB = FirebaseFirestore.getInstance()
     val reviewList = ArrayList<Review>()
 
@@ -62,7 +54,8 @@ class DetailMountainViewModel(): BaseViewModel() {
                 response: Response<ResultSearchImage>
             ) {
                 for(item in response.body()?.items!!){
-                    mountainImageViewList.add(item.link)
+                    val imageModel = NaverSearchImage(imgUrl = item.link, originLink = item.link)
+                    mountainImageViewList.add(imageModel)
                 }
                 addAllItems()
                 respon.invoke(true)

@@ -18,7 +18,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/dark_gray"
+        android:background="@color/dip_dark_gray"
         tools:context=".home.tab1.HomeFragment">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -26,13 +26,13 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-<!--            <androidx.constraintlayout.widget.Group-->
-<!--                android:id="@+id/keywordViewGroup"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:visibility="gone"-->
-<!--                app:constraint_referenced_ids="backButton,historyKeywordLayout,historyRecyclerView"-->
-<!--                tools:visibility="visible" />-->
+            <!--            <androidx.constraintlayout.widget.Group-->
+            <!--                android:id="@+id/keywordViewGroup"-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:visibility="gone"-->
+            <!--                app:constraint_referenced_ids="backButton,historyKeywordLayout,historyRecyclerView"-->
+            <!--                tools:visibility="visible" />-->
             <TextView
                 android:id="@+id/mainTitle"
                 android:layout_width="wrap_content"
@@ -111,12 +111,44 @@
                 app:layout_constraintTop_toBottomOf="@id/tabLayout" />
 
             <LinearLayout
+                android:id="@+id/searchResultLayout"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:orientation="vertical"
+                android:background="@color/dip_dark_gray"
+                android:visibility="gone"
+                tools:visibility="visible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tabLayout">
+
+                <ImageView
+                    android:id="@+id/backBtn"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_margin="10dp"
+                    app:tint="@color/white"
+                    android:src="@drawable/ic_arrow_back"
+                    android:onClick="@{()->vi.onClickBackFromSearchResult()}"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/searchResultLv"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_horizontal"
+                    android:nestedScrollingEnabled="false"
+                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                    app:spanCount="2" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:id="@+id/historyKeywordLayout"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                android:background="@color/white"
                 android:orientation="vertical"
                 android:visibility="gone"
-                android:background="@color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -126,43 +158,56 @@
                     android:id="@+id/backButton"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    android:layout_marginStart="24dp"
                     android:layout_marginVertical="16dp"
-                    android:visibility="visible"
+                    android:layout_marginStart="24dp"
+                    android:onClick="@{()->vi.onClickBack()}"
                     android:src="@drawable/ic_arrow_back"
-                    android:onClick="@{()->vi.onClickBack()}"/>
+                    android:visibility="visible" />
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/historyRecyclerView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:visibility="visible"
-                    android:background="@color/white" />
+                    android:background="@color/white"
+                    android:visibility="visible" />
             </LinearLayout>
 
-            <LinearLayout
+            <com.airbnb.lottie.LottieAnimationView
                 android:id="@+id/progressBar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
                 android:visibility="gone"
+                tools:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="false" />
+<!--            <LinearLayout-->
+<!--                android:id="@+id/progressBar"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:orientation="vertical"-->
+<!--                android:visibility="gone"-->
+<!--                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toTopOf="parent">-->
 
-                <ProgressBar
-                    style="?android:attr/progressBarStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:indeterminateTint="@color/main_green" />
+<!--                <ProgressBar-->
+<!--                    style="?android:attr/progressBarStyle"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_centerInParent="true"-->
+<!--                    android:indeterminateTint="@color/main_green" />-->
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="로딩중..."
-                    android:textColor="@color/main_green" />
-            </LinearLayout>
+<!--                <TextView-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="로딩중..."-->
+<!--                    android:textColor="@color/main_green" />-->
+<!--            </LinearLayout>-->
         </androidx.constraintlayout.widget.ConstraintLayout>
     </FrameLayout>
 </layout>

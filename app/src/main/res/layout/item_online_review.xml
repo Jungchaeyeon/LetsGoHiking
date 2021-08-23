@@ -27,6 +27,7 @@
             android:layout_marginStart="8dp"
             android:background="@drawable/item_review_bg"
             android:ellipsize="end"
+            android:lineSpacingExtra="4sp"
             android:maxWidth="260dp"
             android:maxLines="3"
             android:padding="8dp"

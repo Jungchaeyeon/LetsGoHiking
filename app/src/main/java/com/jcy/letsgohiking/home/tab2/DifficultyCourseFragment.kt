@@ -58,7 +58,8 @@ class DifficultyCourseFragment: BaseDataBindingFragment<FragmentDifficultyCourse
         }
     }
     private fun initProgressBar(){
-        showProgress(false)
+        binding.progressBar.setAnimation(R.raw.progressbar_bg)
+        showProgress(true)
     }
     private fun showProgress(isShow: Boolean){
         if(isShow) binding.progressBar.visibility = View.VISIBLE
@@ -74,6 +75,7 @@ class DifficultyCourseFragment: BaseDataBindingFragment<FragmentDifficultyCourse
             }
             else{
                 Toast.makeText(requireContext(), "데이터를 불러오는 데 실패했습니다.", Toast.LENGTH_SHORT).show()
+                showProgress(false)
             }
         }
     }

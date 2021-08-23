@@ -1,8 +1,11 @@
 package com.jcy.letsgohiking.home.tab2
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -29,6 +32,7 @@ import com.jcy.letsgohiking.home.tab2.model.*
 import com.jcy.letsgohiking.home.tab2.search.Poi
 import com.jcy.letsgohiking.home.tab2.search.Pois
 import com.jcy.letsgohiking.util.RetrofitUtil
+import kotlinx.android.synthetic.main.activity_detail_mountain_info.*
 import kotlinx.android.synthetic.main.bottom_sheet.*
 import kotlinx.coroutines.*
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -57,7 +61,7 @@ class DetailMountainInfoActivity :
         findViewById(R.id.locationListRv)
     }
     companion object{
-        const val CAMERA_ZOOM_LEVEL = 15f
+        const val CAMERA_ZOOM_LEVEL = 13f
     }
     
     override fun setupProperties(bundle: Bundle?) {
@@ -82,6 +86,12 @@ class DetailMountainInfoActivity :
         searchKeyword(mntn.mntnName)
 
     }
+    private fun initAdapter(){
+        adapter = SearchRecyclerAdapter()
+        locationRecyclerVeiw.adapter = adapter
+        reviewAdapter = MountainReviewAdapter()
+        binding.previewRecyclerView.adapter = reviewAdapter
+    }
     fun getMountainReviews(mntnName: String){
         firebaseDB =  Firebase.database.reference
         viewModel.getMountainReview(mntnName){
@@ -102,13 +112,15 @@ class DetailMountainInfoActivity :
                 Log.e("mountainList 데이터확인", viewModel.liveMountainImageItems.value.toString())
 
                 binding.mntnImageList.run {
-                    adapter = BaseDataBindingRecyclerViewAdapter<String>()
+                    adapter = BaseDataBindingRecyclerViewAdapter<NaverSearchImage>()
                         .setItemViewType { item, position, isLast ->
                             if(position ==0) 0 else 0
                         }
                         .addViewType(
-                            BaseDataBindingRecyclerViewAdapter.MultiViewType<String, ItemMntnImageBinding>(R.layout.item_mntn_image) {
-                                this.imgView.loadUrl(it)
+                            BaseDataBindingRecyclerViewAdapter.MultiViewType<NaverSearchImage, ItemMntnImageBinding>(R.layout.item_mntn_image) {
+                                vi = this@DetailMountainInfoActivity
+                                item = it
+                                this.imgView.loadUrl(it.imgUrl)
                             })
                 }
             }
@@ -178,11 +190,15 @@ class DetailMountainInfoActivity :
         }
     private fun initViews(){
 
-        if(mntn.top100reson.trim()!="&amp;nbsp;"){
+        if(mntn.top100reson.trim().isNotEmpty()){
             binding.mntnTop100ReasonViewGroup.isVisible = true
         }
-        if(mntn.courseInfo.trim()!="&amp;nbsp;"){
+        if(mntn.courseInfo.trim().isNotEmpty()){
             binding.mntnHikingPointViewGroup.isVisible = true
+        }
+
+        if(mntn.mntnDetailInfo.trim().isEmpty()){
+            binding.mntnDetailInfoValue.text ="산 정보가 없습니다."
         }
         setBookmarkBtn()
     }
@@ -217,15 +233,12 @@ class DetailMountainInfoActivity :
     fun onClickRecord(){
        ActivityNavigator.with(this).hikingrecord(mntn.mntnName).start()
     }
-    private fun initAdapter(){
-        adapter = SearchRecyclerAdapter()
-        locationRecyclerVeiw.adapter = adapter
-        reviewAdapter = MountainReviewAdapter()
-        binding.previewRecyclerView.adapter = reviewAdapter
-    }
 
     fun onClickShowMoreReview(){
         ActivityNavigator.with(this).review(mntn.mntnName).start()
+    }
+    fun onClickThumbnail(item: NaverSearchImage){
+        //startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(item.originLink)))
     }
     override fun onMapReady(map: GoogleMap) {
         this.map = map

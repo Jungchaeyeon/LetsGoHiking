@@ -7,6 +7,12 @@
         <variable
             name="vm"
             type="com.jcy.letsgohiking.home.tab2.DetailMountainViewModel" />
+        <variable
+            name="item"
+            type="com.jcy.letsgohiking.home.tab2.model.NaverSearchImage" />
+        <variable
+            name="vi"
+            type="com.jcy.letsgohiking.home.tab2.DetailMountainInfoActivity" />
     </data>
 
     <androidx.cardview.widget.CardView

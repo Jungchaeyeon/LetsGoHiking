@@ -7,6 +7,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
@@ -28,6 +29,7 @@ import kotlinx.android.synthetic.main.activity_hiking_record.*
 import org.koin.android.ext.android.bind
 import org.koin.android.viewmodel.ext.android.viewModel
 import java.text.SimpleDateFormat
+import java.util.*
 
 class HikingRecordActivity : BaseDataBindingActivity<ActivityHikingRecordBinding>(R.layout.activity_hiking_record) {
     private lateinit var db: AppDatabase
@@ -47,7 +49,6 @@ class HikingRecordActivity : BaseDataBindingActivity<ActivityHikingRecordBinding
         db = getAppDatabaseRecord(this@HikingRecordActivity)
         initViews()
         getRecordData(activity = this@HikingRecordActivity)
-
     }
 
     private fun initViews(){
@@ -67,8 +68,13 @@ class HikingRecordActivity : BaseDataBindingActivity<ActivityHikingRecordBinding
                             binding.hikingImg.isVisible = true
                         }
                         if(loadedHikingDate.isNullOrEmpty()){
-                            hikingDate = "날짜를 선택해주세요."
-                            viewModel.hikingDate.value = hikingDate
+                            hikingDate = ""
+                            viewModel.hikingDate.value = "날짜를 선택해주세요."
+                        }else{
+                            hikingDate = viewModel.hikingDate.value.toString()
+                        }
+                        if(!viewModel.recordContent.value.isNullOrEmpty()){
+                            binding.deleteBtn.isVisible = true
                         }
                     }
                 }
@@ -93,15 +99,25 @@ class HikingRecordActivity : BaseDataBindingActivity<ActivityHikingRecordBinding
         }
     }
     fun deleteRecord(activity: Activity, recordId: String){
-        viewModel.deleteRecord(activity, recordId){
-            runOnUiThread {
-                if(it) SampleToast.createToast(activity,"산행 기록이 삭제되었습니다:)")?.show()
-                else SampleToast.createToast(activity,"산행 기록이 삭제되지 않았습니다:)")?.show()
-            }
-        }
+        BasicDialogFragment.getInstance()
+            .setTitle("삭제")
+            .setContent("기록을 삭제합니다.")
+            .setOnClickOk {
+                viewModel.deleteRecord(activity, recordId){
+                    if(it) {
+                        SampleToast.createToast(activity,"산행 기록이 삭제되었습니다:)")?.show()
+                        onBackPressed()
+                    }
+                    else SampleToast.createToast(activity,"산행 기록이 삭제되지 않았습니다:)")?.show()
+
+                }
+            }.show(this.supportFragmentManager)
     }
     fun onClickBack(){
         finish()
+    }
+    fun onClickDelete(){
+        deleteRecord(this,mntnName)
     }
     fun onClickSave(){
         val content = binding.content.text.toString().trim()
@@ -109,13 +125,18 @@ class HikingRecordActivity : BaseDataBindingActivity<ActivityHikingRecordBinding
             Snackbar.make(this.contentLayout ,"내용을 작성해주세요.",Snackbar.LENGTH_SHORT).show()
             return
         }
+        if(hikingDate.isEmpty()){
+            Snackbar.make(this.contentLayout ,"날짜를 선택해주세요.",Snackbar.LENGTH_SHORT).show()
+            return
+        }
         if(mntnName.isEmpty()) return
         val whoHikingWith = binding.hikingWith.text.toString().trim()
         val writingTime = nowDate()
         val mntnName = viewModel.recordTitle.value.toString()
-        Log.e("mntnName", mntnName)
         hikingDate = viewModel.hikingDate.value.toString()
-        val record = Record(mntnName,writingTime,hikingDate,whoHikingWith,hikingImg ?:"",content)
+        Log.e("recordData", hikingDate.substring(6,10))
+        val record = Record(mntnName,writingTime,hikingDate.substring(6,10),hikingDate,whoHikingWith,hikingImg ?:"",content)
+        Log.e("recordData확인", record.hikingYear.toString())
         insertRecord(this, record)
     }
     fun onClickDatePicker(){

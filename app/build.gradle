@@ -8,6 +8,14 @@ plugins {
 
 android {
 
+    signingConfigs {
+        release {
+            storeFile file('E:\\Users\\dus16\\Keys\\LetsGoHikingRelease.jks')
+            storePassword 'FJ325Cjasdf#%*dgGD'
+            keyPassword 'FJ325Cjasdf#%*dgGD'
+            keyAlias 'LetsGoHikingRelease'
+        }
+    }
     compileSdkVersion rootProject.compileSdkVersion
     buildToolsVersion rootProject.buildToolVersion
 
@@ -33,7 +41,9 @@ android {
     buildTypes {
         release {
             minifyEnabled false
+            debuggable true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
 

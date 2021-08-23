@@ -9,11 +9,11 @@
     <string name="tab_recommend_course">코스 추천</string>
     <string name="tab_difficulty_course">난이도별 코스</string>
     <string name="location">지역</string>
-    <string name="height">높이</string>
+    <string name="height">높이(m)</string>
     <string name="info">소개</string>
     <string name="search">검색</string>
     <string name="mntn_height">산 높이</string>
-    <string name="hiking_point">산행 포인트</string>
+    <string name="hiking_point">  산행 포인트</string>
     <string name="save">저장</string>
     <string name="notice_naver_image">네이버검색 이미지입니다.</string>
     <string name="moreInfo">더보기</string>
@@ -24,4 +24,8 @@
     <string name="register">등록</string>
     <string name="plz_write_review">리뷰를 작성해주세요.</string>
     <string name="who_with">누구랑: </string>
+    <string name="leave_a_review">리뷰 남기기</string>
+    <string name="top_100_reason_title">100대 명산 선정 이유</string>
+    <string name="main_record_notice">등록된 등산 기록이 없습니다.  등산 기록을 남겨보세요:)</string>
+    <string name="ok">확인</string>
 </resources>

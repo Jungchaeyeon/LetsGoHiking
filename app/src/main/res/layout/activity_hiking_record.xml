@@ -122,6 +122,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="24dp"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
                     android:orientation="horizontal">
 
                     <TextView
@@ -146,9 +148,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="0dp"
                         android:background="@color/trans"
-                        android:focusable="true"
-                        android:focusedByDefault="false"
-                        android:focusableInTouchMode="true"
                         android:hint="누구와 함께 등산했나요?"
                         android:text="@{vm.hikingWith}" />
                 </LinearLayout>
@@ -198,12 +197,23 @@
                 android:onClick="@{()->vi.onClickGetImage()}"
                 android:padding="8dp"
                 android:src="@drawable/ic_image" />
-
             <ImageButton
+                android:id="@+id/deleteBtn"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_toStartOf="@id/saveBtn"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:backgroundTint="@color/trans"
+                android:visibility="invisible"
+                android:onClick="@{()->vi.onClickDelete()}"
+                android:padding="8dp"
+                android:src="@drawable/ic_baseline_delete_24" />
+            <ImageButton
+                android:id="@+id/saveBtn"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_alignParentEnd="true"
-                android:layout_marginStart="24dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
                 android:backgroundTint="@color/trans"

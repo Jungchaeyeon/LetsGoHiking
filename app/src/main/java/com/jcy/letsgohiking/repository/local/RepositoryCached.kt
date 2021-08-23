@@ -38,7 +38,7 @@ abstract class RepositoryCached {
         hashCached[key.name] = value
         return value
     }
-
+    fun getUserClass() = getValue(LocalKey.USERCLASS, 0)
     fun getReviewCount() = getValue(LocalKey.REVIEWCOUNT, 5)
     fun getUserId() = getGeneralValue(LocalKey.USERID , "")
     fun getUserName() = getGeneralValue(LocalKey.USERNAME , "")

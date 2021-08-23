@@ -7,4 +7,5 @@ object Key {
     const val NAVER_API_CLIENT_ID ="Av1fZDBpnofuZHD7npGf"
 
     const val NAVER_API_CLIENT_SECRET = "7UKKHa2Nzm"
+
 }

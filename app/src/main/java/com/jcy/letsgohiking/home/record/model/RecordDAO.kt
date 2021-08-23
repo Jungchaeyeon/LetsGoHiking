@@ -23,4 +23,6 @@ interface RecordDAO{
         @Query("SELECT* FROM record WHERE mntnName = :keyword")
         fun find(keyword: String): Record
 
+        @Query("SELECT* FROM record WHERE hikingYear = :keyword")
+        fun findYear(keyword: String):  List<Record>
 }

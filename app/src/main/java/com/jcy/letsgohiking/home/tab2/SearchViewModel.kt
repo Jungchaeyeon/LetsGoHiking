@@ -61,7 +61,7 @@ class SearchViewModel(): BaseViewModel(){
         ))
     }
     fun getMountainsByDifficulty(activity: Activity, url: String, response: (success: Boolean) -> Unit){
-        val mntncode = getMountainCode()
+        val mntncode = 10.toString()
         Log.e("mntncode 확인", mntncode)
         var localUrl= url+ "&mntnInfoThmCd=${mntncode}"
 
@@ -96,22 +96,32 @@ class SearchViewModel(): BaseViewModel(){
 
                         val eElement: Element = nNode as Element
                         val mountain : MountainItem = MountainItem()
+                        val mntnName =getTagValue("mntnnm",eElement)
                         val mountainImgUrl = getTagValue("mntnattchimageseq", eElement)
                         val mountainHeight = getTagValue("mntninfohght",eElement).trim()
+                        var mntnDetailInfo = getTagValue("mntninfodtlinfocont", eElement).trim()
+                        var top100reson = getTagValue("hndfmsmtnslctnrson",eElement).trim()
+                        var courseInfo = getTagValue("crcmrsghtnginfoetcdscrt", eElement).trim()
 
                         if(mountainImgUrl.isNotEmpty() && mountainHeight.isNotEmpty()){
                             if(mountainImgUrl == "http://www.forest.go.kr/newkfsweb/cmm/fms/getImage.do?fileSn=1&atchFileId="){
                                 continue
                             }
+                            when(mntnName){
+                                "관산","봉제산","구룡산","견두산","경수산","구수산","곧은봉","백두산","기마봉",
+                                "도장산"-> continue
+                            }
                             mountain.mntnId = getTagValue("mntnid", eElement).toLong()
-                            mountain.mntnName = getTagValue("mntnnm",eElement)
+                            mountain.mntnName =mntnName
                             mountain.mntnHeight = mountainHeight.toInt()
                             mountain.mntnLocation = getTagValue("mntninfopoflc",eElement)
                             mountain.mntnImg = mountainImgUrl
                             mountain.mntnInfo = getTagValue("mntnsbttlinfo",eElement)
-                            mountain.courseInfo = getTagValue("crcmrsghtnginfoetcdscrt", eElement)
-                            mountain.top100reson = getTagValue("hndfmsmtnslctnrson",eElement)
-                            mountain.mntnDetailInfo = getTagValue("mntninfodtlinfocont", eElement)
+                            mountain.courseInfo = filterString(courseInfo)
+                            mountain.top100reson = filterString(top100reson)
+                            mountain.mntnDetailInfo = filterString(mntnDetailInfo)
+
+                            if(mountain.mntnDetailInfo.isEmpty()) mountain.mntnDetailInfo ="산 정보가 없습니다."
 
                             mntnsList.add(mountain)
                         }
@@ -196,14 +206,9 @@ class SearchViewModel(): BaseViewModel(){
                                 }
                             }
                             if(mountainHeight=="") continue
-                            if(mntnDetailInfo == "&amp;nbsp;") continue
-                            if(courseInfo =="&amp;#160;") {
-                                courseInfo ="정보가 없습니다:)"
+                            when(mntnName){
+                                "관산","봉제산","구룡산","견두산","경수산" -> continue
                             }
-                            when(top100reson){
-                                "&nbsp;","&amp;#160;","<p>&nbsp;</P>" -> top100reson = "정보가 없습니다:)"
-                            }
-                            if(mntnName =="구룡산" || mntnName=="견두산") continue
                             //예외처리-----------------------------------------------------------------------------
 
                             mountain.mntnId = getTagValue("mntnid", eElement).toLong()
@@ -212,9 +217,9 @@ class SearchViewModel(): BaseViewModel(){
                             mountain.mntnLocation = getTagValue("mntninfopoflc",eElement)
                             mountain.mntnImg = mountainImgUrl
                             mountain.mntnInfo = getTagValue("mntnsbttlinfo",eElement)
-                            mountain.courseInfo = courseInfo
-                            mountain.top100reson = top100reson
-                            mountain.mntnDetailInfo =mntnDetailInfo
+                            mountain.courseInfo = filterString(courseInfo)
+                            mountain.top100reson = filterString(top100reson)
+                            mountain.mntnDetailInfo =filterString(mntnDetailInfo)
 
                             addItem(mountain)
                         }
@@ -227,38 +232,11 @@ class SearchViewModel(): BaseViewModel(){
                 return@Thread
             }.start()
     }
-  /* -------------산정보주제코드	산정보주제명----------
-            01	계곡  -07
-            02	단풍  -09
-            03	억새  -09
-            04	바다  -08
-            05	문화유적 -03
-            06	일출/일몰
-            07	가족산행
-            08	바위
-            09	봄꽃  - 05
-            10	조망
-            11	설경    -01 12
-   -----------------------------------------------   */
-
-    private fun getMountainCode(): String{
-        val nowMonth = String.format("%02d",(Calendar.getInstance().get(Calendar.MONTH)+1))
-        var codeList = arrayOf("10")
-        when(nowMonth){
-            "12","01","02" -> {
-                codeList = arrayOf("10","11","07","05","06")
-            }
-            "03","04","05" -> {
-                codeList = arrayOf("05","06","07","08","09","10")
-            }
-            "06","07","08" -> {
-                codeList = arrayOf("01","04","05","06","07","10")
-            }
-            "09","10","11" ->{
-                codeList = arrayOf("02","03","06","07","08","10")
-            }
-        }
-        return codeList.random().toString()
+    fun filterString(_string: String): String{
+        val pattern = "[a-z|A-Z|&;/#@%^*()]".toRegex()
+        val patternBr = "[<br>||<>]".toRegex()
+        val firstPass = pattern.replace(_string,"")
+        return patternBr.replace(firstPass,"\n")
     }
 
 
@@ -296,7 +274,7 @@ class SearchViewModel(): BaseViewModel(){
                     if(nNode?.nodeType== Node.ELEMENT_NODE){
 
                         val eElement: Element = nNode as Element
-                        val mountain : MountainItem = MountainItem()
+                        val mountain  = MountainItem()
                         val mountainImgUrl = getTagValue("mntnattchimageseq", eElement)
                         val mountainHeight = getTagValue("mntninfohght",eElement).trim()
 
@@ -311,12 +289,13 @@ class SearchViewModel(): BaseViewModel(){
                             mountain.mntnInfo = getTagValue("mntnsbttlinfo",eElement)
                             mountain.mntnImg = mountainImgUrl
 
-                            mountainArray.add(mountain)
+                            addItem(mountain)
 
                         }
                     }
                 }
                 activity.runOnUiThread(){
+                    Log.e("mountainArray", mountainArray.toString())
                     response.invoke(true)
                 }
                 return@Thread
@@ -328,5 +307,38 @@ class SearchViewModel(): BaseViewModel(){
         val nList = eElement.getElementsByTagName(tag).item(0).childNodes
         val nValue = nList.item(0) as Node
         return nValue.nodeValue
+    }
+    /* -------------산정보주제코드	산정보주제명----------
+          01	계곡  -07
+          02	단풍  -09
+          03	억새  -09
+          04	바다  -08
+          05	문화유적 -03
+          06	일출/일몰
+          07	가족산행
+          08	바위
+          09	봄꽃  - 05
+          10	조망
+          11	설경    -01 12
+ -----------------------------------------------   */
+
+    private fun getMountainCode(): String{
+        val nowMonth = String.format("%02d",(Calendar.getInstance().get(Calendar.MONTH)+1))
+        var codeList = arrayOf("10")
+        when(nowMonth){
+            "12","01","02" -> {
+                codeList = arrayOf("10","11","07","05","06")
+            }
+            "03","04","05" -> {
+                codeList = arrayOf("05","06","07","08","09","10")
+            }
+            "06","07","08" -> {
+                codeList = arrayOf("01","04","05","06","07","10")
+            }
+            "09","10","11" ->{
+                codeList = arrayOf("02","03","06","07","08","10")
+            }
+        }
+        return codeList.random().toString()
     }
 }

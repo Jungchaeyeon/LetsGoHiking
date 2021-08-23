@@ -81,13 +81,15 @@ class LoginViewModel(
                                 val userId = googleSignInAccount.id
                                 val userName = googleSignInAccount.displayName ?:""
                                 val profileUrl = googleSignInAccount.photoUrl ?:""
+                                val userHikingClass = 0
 
                                 repositoryCached.setValue(LocalKey.GOOGLETOKEN, googleSignInAccount.idToken?.toString())
                                 repositoryCached.setValue(LocalKey.USERID, userId)
                                 repositoryCached.setValue(LocalKey.USERNAME, userName)
+                                repositoryCached.setValue(LocalKey.USERCLASS, userHikingClass)
 
                                 if(userId!=null && userId.isNotEmpty()){
-                                    val userModel = User(userId, userName, profileUrl.toString())
+                                    val userModel = User(userId, userName, profileUrl.toString(),userHikingClass)
                                     saveUser(userModel)
                                 }
                                 response.invoke(true)

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="vi"
+            type="com.jcy.letsgohiking.home.record.BasicDialogFragment" />
+    </data>
+
+    <LinearLayout style="@style/DialogLayout">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_baseline_delete_24"
+                    app:tint="@color/red" />
+
+                <TextView
+                    style="@style/mountainInfoTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="@{vi.liveTitle}"
+                    android:textColor="#000000"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    tools:text="타이틀" />
+            </LinearLayout>
+
+            <TextView
+                style="@style/mountainInfoContent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="@{vi.liveSubTitle}"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:visibility="@{vi.liveSubTitle.empty ? View.GONE : View.VISIBLE , default = gone}"
+                tools:text="서브 타이틀" />
+
+            <TextView
+                style="@style/mountainInfoContent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                android:text="@{vi.liveContent}"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                tools:text="내용" />
+        </LinearLayout>
+
+
+        <!--    line색상 대신 전체 색 채우고 싶을 경우 backgroundTint 사용 하면 됨    -->
+        <Button
+            style="@style/mountainInfoContent"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_gravity="end"
+            android:background="@drawable/btn_recycle_item"
+            android:onClick="@{() -> vi.onClickOk()}"
+            android:text="@{vi.liveButton}" />
+
+    </LinearLayout>
+
+</layout>

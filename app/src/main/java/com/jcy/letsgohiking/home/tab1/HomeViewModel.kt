@@ -17,6 +17,6 @@ class HomeViewModel(
         val df = SimpleDateFormat("yyyy년")
         return df.format(today)
     }
-    //todo 날씨 api 받아오기
+
 
 }

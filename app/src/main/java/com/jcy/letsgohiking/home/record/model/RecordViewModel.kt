@@ -58,6 +58,23 @@ class RecordViewModel : BaseViewModel() {
             respon.invoke(false)
         }
     }
+    fun getYearMatchRecordData(activity: Activity,year: String, respon: (Boolean) -> Unit){
+        db = getAppDatabaseRecord(activity)
+        try {
+            Thread {
+                val recordD = db.recordDao().findYear(year)
+
+                activity.runOnUiThread {
+                    recordMutableList.value = recordD
+                    respon.invoke(true)
+                }
+
+            }.start()
+        } catch (e: Exception) {
+            Log.e("error get Record Data", e.toString())
+            respon.invoke(false)
+        }
+    }
 
     fun getRecordData(activity: Activity, mntnName: String, respon: (Boolean) -> Unit) {
         db = getAppDatabaseRecord(activity)
@@ -85,18 +102,13 @@ class RecordViewModel : BaseViewModel() {
         }
     }
 
-    fun deleteRecord(activity: Activity, recordId: String, respon: (Boolean) -> Unit) {
+    fun deleteRecord(activity: Activity, mntnName: String, respon: (Boolean) -> Unit) {
         db = getAppDatabaseRecord(activity)
         try {
             Thread {
-                Runnable {
-                    val recordDB = db.recordDao().delete(recordId)
-                    recordDate.value = ""
-                    recordContent.value = ""
-
+                    db.recordDao().delete(mntnName)
                     activity.runOnUiThread {
                         respon.invoke(true)
-                    }
                 }
             }.start()
         } catch (e: Exception) {

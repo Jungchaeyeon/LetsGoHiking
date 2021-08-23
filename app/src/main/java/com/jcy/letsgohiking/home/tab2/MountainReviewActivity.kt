@@ -48,11 +48,14 @@ class MountainReviewActivity : BaseDataBindingActivity<ActivityMountainReviewBin
         firestoreDB = FirebaseFirestore.getInstance()
         viewModel.getMountainReview(mntnName){
             if(it){
-                binding.noReviewNotice.isVisible = false
                 reviewList = viewModel.reviewList
-                if(reviewList.size >0) binding.noReviewNotice.isVisible = false
-                reviewAdapter.submitList(reviewList)
-                reviewAdapter.notifyDataSetChanged()
+                if(reviewList.size >0) {
+                    binding.noReviewNotice.isVisible = false
+                    reviewAdapter.submitList(reviewList)
+                    reviewAdapter.notifyDataSetChanged()
+                }else{
+                    binding.noReviewNotice.isVisible = true
+                }
             }
             else{
                 binding.noReviewNotice.isVisible = true

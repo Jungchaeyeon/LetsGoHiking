@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.MotionEvent
 import android.view.View
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.hdh.base.fragment.BaseDataBindingFragment
@@ -17,6 +18,8 @@ import com.jcy.letsgohiking.home.tab2.adapter.MountainAdapter
 import com.jcy.letsgohiking.home.tab2.model.Area
 import com.jcy.letsgohiking.home.tab2.model.MountainItem
 import com.jcy.letsgohiking.util.Log
+import kotlinx.android.synthetic.main.fragment_search.*
+import org.koin.android.ext.android.bind
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 
 class RecommendCourseFragment :
@@ -109,12 +112,12 @@ class RecommendCourseFragment :
     }
 
     private fun initProgressBar() {
-        showProgress(false)
+        binding.progressBar.setAnimation(R.raw.progressbar_bg)
+        showProgress(true)
     }
 
     private fun showProgress(isShow: Boolean) {
-        if (isShow) binding.progressBar.visibility = View.VISIBLE
-        else binding.progressBar.visibility = View.GONE
+        binding.progressBar.isVisible = isShow
     }
 
     private fun initAdapter() {
@@ -136,23 +139,12 @@ class RecommendCourseFragment :
                 showProgress(false)
             } else {
                 Toast.makeText(requireContext(), "정보를 불러오는 데 실패했습니다.", Toast.LENGTH_SHORT).show()
+                showProgress(false)
             }
         }
     }
-
-    fun nextStepSearch(isSuccess: Boolean, mountainList: ArrayList<MountainItem>) {
-        if (isSuccess) {
-            if (isAdded) {
-                adapter.submitList(mountainList.orEmpty())
-                adapter.notifyDataSetChanged()
-            }
-
-        } else {
-            Toast.makeText(requireContext(), "정보를 불러오는 데 실패했습니다.", Toast.LENGTH_SHORT).show()
-        }
-    }
-
     fun onClickItem(view: View, area: String) {
+        binding.progressBar.isVisible = true
         var areaCode = "-1"
         when (area) {
             "서울특별시" ->  areaCode = "01"
@@ -170,12 +162,11 @@ class RecommendCourseFragment :
             "전라남도" -> areaCode = "13"
             "경상북도" -> areaCode = "14"
             "경상남도" -> areaCode = "15"
-            "제주도 " -> areaCode = "16"
-            else -> "01"
+            "제주도" -> areaCode = "16"
+            else -> "16"
         }
         Log.e("클릭?", "${areaCode}로 확인")
         getMountains(requireActivity(), url, areaCode)
-        showProgress(true)
     }
 
     companion object {
