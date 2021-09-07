@@ -36,5 +36,6 @@
 ## 구현 기능
 - 산 정보 API서비스, 북마크기능, 산 위치정보제공, 등산리뷰 채팅, 산행일기
 <br />
+
 ## 사용 기술 스택
-MVVM -retrofit2, databinding, liveddata, koin , kotlin, room
+- MVVM -retrofit2, databinding, liveddata, koin , kotlin, room
