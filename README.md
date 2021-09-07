@@ -1,8 +1,4 @@
 
-<<<<<<< HEAD
-Let's go hiking Project
-MVVM -retrofit2, databinding, liveddata, koin , kotlin
-=======
 # Let's go hiking
 
 
@@ -43,4 +39,4 @@ MVVM -retrofit2, databinding, liveddata, koin , kotlin
 
 ## 사용 기술 스택
 - MVVM -retrofit2, databinding, liveddata, koin , kotlin, room
->>>>>>> originhiking/master
+
