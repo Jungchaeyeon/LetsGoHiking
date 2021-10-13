@@ -52,13 +52,6 @@
                     android:fontFamily="@font/gaegu_regular"
                     android:text="@{vm.liveName}"
                     tools:text="챈"/>
-                <ImageView
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    android:layout_marginStart="8dp"
-                    android:backgroundTint="@color/gray"
-                    android:src="@drawable/ic_arrow_right"
-                    />
             </LinearLayout>
             <View
                 android:layout_width="match_parent"
@@ -88,6 +81,33 @@
                     android:fontFamily="@font/gaegu_regular"
                     android:textSize="16sp"
                     tools:text="카카오로그인"/>
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/gray"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:onClick="@{()->vi.onClickInfoDeveloper()}">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="24dp"
+                    android:fontFamily="@font/gaegu_regular"
+                    android:textSize="16sp"
+                    android:text="@string/info_developer"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"/>
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginEnd="6dp"
+                    android:src="@drawable/ic_arrow_right"/>
             </LinearLayout>
             <View
                 android:layout_width="match_parent"

@@ -25,12 +25,13 @@ fun ImageView.loadUrl(url: String?) {
 
 fun ImageView.getProfileImage(userId: String){
     val firebaseFirestore = FirebaseFirestore.getInstance()
-    var url = ""
+    var url : String? = ""
     firebaseFirestore.collection("users")
         .document(userId)
         .get()
         .addOnCompleteListener {
-            url = it.result["profileImageUrl"].toString()
+//            url = it.result["profileImageUrl"].toString()
+            url = ""
 
             if (!url.isNullOrEmpty()) {
                 Glide.with(this).load(url).circleCrop()
