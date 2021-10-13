@@ -69,6 +69,34 @@
                 android:visibility="visible" />
         </LinearLayout>
 
+        <LinearLayout
+            android:id="@+id/myReviewContainer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:layout_marginEnd="24dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/reviewEditText">
+
+            <TextView
+                android:id="@+id/myReview"
+                style="@style/mountainInfoContent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:background="@drawable/item_review_bg"
+                android:padding="8dp"
+                android:text="@string/noRegisteredReview"
+                android:visibility="visible" />
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_profile" />
+
+        </LinearLayout>
+
         <EditText
             android:id="@+id/reviewEditText"
             android:layout_width="0dp"

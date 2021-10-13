@@ -40,13 +40,14 @@ class ReviewViewModel(): BaseViewModel() {
         fireStoreDB.collection(mntnName).addSnapshotListener { list, error ->
             reviewList.clear()
             if(list == null) respon.invoke(false)
-            for(data in list!!.documents){
-                var review = data.toObject(Review::class.java)
-                if (review != null) {
-                    reviewList.add(review)
+            if (list != null) {
+                for(data in list.documents){
+                    var review = data.toObject(Review::class.java)
+
+                    review.takeIf { it?.review?.isNotEmpty()!! }?.let { reviewList.add(it) }
                 }
+                respon.invoke(true)
             }
-            respon.invoke(true)
         }
     }
 }

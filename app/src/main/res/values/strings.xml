@@ -28,4 +28,7 @@
     <string name="top_100_reason_title">100대 명산 선정 이유</string>
     <string name="main_record_notice">등록된 등산 기록이 없습니다.  등산 기록을 남겨보세요:)</string>
     <string name="ok">확인</string>
+    <string name="bookmark_info">(북마크한 산이 이곳에 나타납니다.)</string>
+    <string name="info_developer">개발자 정보</string>
+    <string name="developer_github_page">https://github.com/Jungchaeyeon</string>
 </resources>

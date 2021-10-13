@@ -1,5 +1,10 @@
 package com.jcy.letsgohiking.home.tab5
 
+import android.app.Notification
+import android.content.Intent
+import android.content.Intent.ACTION_VIEW
+import android.net.Uri
+import androidx.core.app.NotificationCompat
 import com.hdh.base.fragment.BaseDataBindingFragment
 import com.jcy.letsgohiking.ActivityNavigator
 import com.jcy.letsgohiking.R
@@ -40,6 +45,9 @@ class ProfileFragment : BaseDataBindingFragment<FragmentProfileBinding>(R.layout
                 }
             }
         }
+    }
+    fun onClickInfoDeveloper(){
+        startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.developer_github_page))))
     }
     fun initViews(){
         val uid = repositoryCached.getUserId()

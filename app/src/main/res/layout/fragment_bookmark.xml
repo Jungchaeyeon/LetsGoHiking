@@ -17,7 +17,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            tools:background="@color/dip_dark_gray">
+
 
             <TextView
                 style="@style/tab_text"
@@ -27,6 +29,14 @@
                 android:layout_marginVertical="8dp"
                 android:text="@string/save"
                 android:textSize="20sp" />
+            <TextView
+                style="@style/tab_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="8dp"
+                android:text="@string/bookmark_info"
+                android:textSize="14sp" />
 
             <View
                 android:layout_width="match_parent"

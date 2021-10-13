@@ -10,6 +10,7 @@ import com.jcy.letsgohiking.SampleToast
 import com.jcy.letsgohiking.databinding.ActivityMountainReviewBinding
 import com.jcy.letsgohiking.home.tab2.adapter.MountainReviewAdapter
 import com.jcy.letsgohiking.home.tab2.model.Review
+import com.jcy.letsgohiking.repository.local.LocalKey
 import com.jcy.letsgohiking.repository.local.RepositoryCached
 import com.jcy.letsgohiking.util.Log
 import kotlinx.android.synthetic.main.activity_mountain_review.*
@@ -51,27 +52,32 @@ class MountainReviewActivity : BaseDataBindingActivity<ActivityMountainReviewBin
                 reviewList = viewModel.reviewList
                 if(reviewList.size >0) {
                     binding.noReviewNotice.isVisible = false
-                    reviewAdapter.submitList(reviewList)
+                    reviewAdapter.submitList(reviewList) }
                     reviewAdapter.notifyDataSetChanged()
+
+                reviewList.map{ myReview->
+                     if(myReview.userId == repositoryCached.getUserId()) {
+                         binding.myReview.text = myReview.review
+                     }
+                }
+
                 }else{
                     binding.noReviewNotice.isVisible = true
                 }
             }
-            else{
-                binding.noReviewNotice.isVisible = true
-            }
-        }
     }
     fun onClickAddReview(){
         val reviewContent = getReviewFromEditText()
         if(reviewContent.isEmpty()) return
-        val review = Review( repositoryCached.getUserName(),reviewContent)
+        val review = Review( repositoryCached.getUserName(),repositoryCached.getUserId(),reviewContent)
             viewModel.deleteMountainReview(mntnName,review){isSuccessful->
                 if(isSuccessful){
                     viewModel.setMountainReview(mntnName,review){isSuccessful->
                         if(isSuccessful){
                             SampleToast.createToast(this, "리뷰가 등록되었습니다:)")?.show()
                             binding.reviewEditText.text.clear()
+                            binding.myReview.text = reviewContent
+
                         }
                         else{
                             SampleToast.createToast(this, "리뷰가 등록되지 않았습니다.")?.show()

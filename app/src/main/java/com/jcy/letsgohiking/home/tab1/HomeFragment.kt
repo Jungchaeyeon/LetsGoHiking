@@ -96,7 +96,7 @@ class HomeFragment : BaseDataBindingFragment<FragmentHomeBinding>(R.layout.fragm
     }
     private fun setHikingClass(classNum: Int): String{
         return when(classNum){
-            0 -> "등린이"
+            0 -> "등린이 (초보)"
             1 -> "등산러"
             2 -> "프로등산러"
             else -> "등린이"
