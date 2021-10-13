@@ -2,8 +2,8 @@
 buildscript {
 
     ext {
-        versionCode = 7
-        versionName = "0.0.7"
+        versionCode = 8
+        versionName = "0.0.8"
 
         kotlinVersion = '1.4.21'
         gradleVersion = '4.1.1'
