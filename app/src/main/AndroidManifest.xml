@@ -33,7 +33,7 @@
                 <!-- Redirect URI: "kakao{NATIVE_APP_KEY}://oauth“ -->
                 <data
                     android:host="oauth"
-                    android:scheme="kakaob06197c7ca4f230f05a2bc7a0328bc94" />
+                    android:scheme="kakao자신이 등록받은 auth키로 변경" />
             </intent-filter>
         </activity>
         <activity android:name=".home.tab2.DetailMountainInfoActivity" />
