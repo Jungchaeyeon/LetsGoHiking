@@ -1,5 +1,6 @@
 package com.jcy.letsgohiking.home.record.model
 
+import android.graphics.Bitmap
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -12,8 +13,8 @@ data class Record (
     @ColumnInfo var hikingYear: String="",
     @ColumnInfo var hikingDate: String="",
     @ColumnInfo var hikingWith: String="",
-    @ColumnInfo var hikingImg: String="",
+    @ColumnInfo var hikingImg: Bitmap ?= null,
     @ColumnInfo var content: String="",
 ): Serializable {
-    constructor() : this("","","","","","","")
+    constructor() : this("","","","","",null,"")
 }

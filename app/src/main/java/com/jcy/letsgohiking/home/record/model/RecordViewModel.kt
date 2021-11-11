@@ -1,6 +1,7 @@
 package com.jcy.letsgohiking.home.record.model
 
 import android.app.Activity
+import android.graphics.Bitmap
 import androidx.lifecycle.MutableLiveData
 import com.hdh.base.viewmodel.BaseViewModel
 import com.jcy.letsgohiking.home.tab2.AppDatabase
@@ -14,7 +15,7 @@ class RecordViewModel : BaseViewModel() {
     var recordTitle = MutableLiveData<String>()
     var hikingDate = MutableLiveData<String>()
     var hikingWith = MutableLiveData<String>()
-    var hikingImg = MutableLiveData<String>()
+    var hikingImgBitmap = MutableLiveData<Bitmap>()
     val recordMutableList = MutableLiveData<List<Record>>()
 
     private lateinit var db: AppDatabase
@@ -87,7 +88,7 @@ class RecordViewModel : BaseViewModel() {
                             recordDate.value = record.rid
                             hikingDate.value = record.hikingDate
                             hikingWith.value = record.hikingWith
-                            hikingImg.value = record.hikingImg
+                            hikingImgBitmap.value = record.hikingImg
                             recordContent.value = record.content.trim()
 
                         }

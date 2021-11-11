@@ -87,6 +87,7 @@ class LoginViewModel(
                                 repositoryCached.setValue(LocalKey.USERID, userId)
                                 repositoryCached.setValue(LocalKey.USERNAME, userName)
                                 repositoryCached.setValue(LocalKey.USERCLASS, userHikingClass)
+                                repositoryCached.setValue(LocalKey.USERPROFILEIMG, profileUrl)
 
                                 if(userId!=null && userId.isNotEmpty()){
                                     val userModel = User(userId, userName, profileUrl.toString(),userHikingClass)

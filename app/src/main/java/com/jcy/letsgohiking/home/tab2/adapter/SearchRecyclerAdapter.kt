@@ -1,5 +1,6 @@
 package com.jcy.letsgohiking.home.tab2.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -42,6 +43,7 @@ class SearchRecyclerAdapter :
 
     override fun getItemCount(): Int = searchResultList.size
 
+    @SuppressLint("NotifyDataSetChanged")
     fun setSearchResultList(
         searchResultList: List<SearchResultEntity>,
         searchResultClickListener: (SearchResultEntity) -> Unit

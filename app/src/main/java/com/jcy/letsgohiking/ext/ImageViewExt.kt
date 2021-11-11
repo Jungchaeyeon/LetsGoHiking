@@ -16,11 +16,11 @@ fun ImageView.setImage(Image: Int) {
 
 @BindingAdapter("app:loadUrl")
 fun ImageView.loadUrl(url: String?) {
-    if (url.isNullOrEmpty()) {
-        return
+    var thisUrl = url
+    if (thisUrl.isNullOrEmpty()) {
+        thisUrl=""
     }
-
-    Glide.with(this).load(url).into(this)
+    Glide.with(this).load(thisUrl).into(this)
 }
 
 fun ImageView.getProfileImage(userId: String){
@@ -30,8 +30,8 @@ fun ImageView.getProfileImage(userId: String){
         .document(userId)
         .get()
         .addOnCompleteListener {
-//            url = it.result["profileImageUrl"].toString()
-            url = ""
+            url = it.result["profileImageUrl"].toString()
+//            url = ""
 
             if (!url.isNullOrEmpty()) {
                 Glide.with(this).load(url).circleCrop()
