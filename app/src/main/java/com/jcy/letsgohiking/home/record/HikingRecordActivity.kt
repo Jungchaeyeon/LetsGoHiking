@@ -1,12 +1,17 @@
 package com.jcy.letsgohiking.home.record
 
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.ImageDecoder
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.provider.MediaStore
 import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
@@ -14,6 +19,7 @@ import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
 import androidx.core.view.isVisible
+import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
 import com.hdh.base.activity.BaseDataBindingActivity
 import com.jcy.letsgohiking.ActivityNavigator
@@ -28,6 +34,7 @@ import com.jcy.letsgohiking.util.Log
 import kotlinx.android.synthetic.main.activity_hiking_record.*
 import org.koin.android.ext.android.bind
 import org.koin.android.viewmodel.ext.android.viewModel
+import java.security.AccessController.getContext
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -36,7 +43,8 @@ class HikingRecordActivity : BaseDataBindingActivity<ActivityHikingRecordBinding
     private val viewModel by viewModel<RecordViewModel>()
     private lateinit var mntnName: String
     private lateinit var hikingDate: String
-    private var hikingImg : String? = null
+//    private var hikingImg : String? = null
+    private var hikingImgBitmap : Bitmap? = null
 
     override fun setupProperties(bundle: Bundle?) {
         super.setupProperties(bundle)
@@ -59,14 +67,14 @@ class HikingRecordActivity : BaseDataBindingActivity<ActivityHikingRecordBinding
             viewModel.getRecordData(activity, mntnName){
                 if(it){
                     runOnUiThread {
-                        hikingImg = viewModel.hikingImg.value
+                        hikingImgBitmap = viewModel.hikingImgBitmap.value
                         val loadedHikingDate = viewModel.hikingDate.value
-                        if(hikingImg.isNullOrEmpty()) {
-                            binding.hikingImg.isVisible = false
-                        } else{
-                            binding.hikingImg.setImageURI(hikingImg?.toUri())
+
+                        hikingImgBitmap?.let {
+                            binding.hikingImg.setImageBitmap(hikingImgBitmap)
                             binding.hikingImg.isVisible = true
                         }
+
                         if(loadedHikingDate.isNullOrEmpty()){
                             hikingDate = ""
                             viewModel.hikingDate.value = "날짜를 선택해주세요."
@@ -84,10 +92,13 @@ class HikingRecordActivity : BaseDataBindingActivity<ActivityHikingRecordBinding
             }
 
     }
+    @SuppressLint("WrongConstant")
     fun startContentProvider(){
         val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
         intent.addCategory(Intent.CATEGORY_OPENABLE)
         intent.type = "image/*"
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+        intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
         startActivityForResult(intent, 3030)
     }
     fun insertRecord(activity: Activity, record: Record){
@@ -95,6 +106,7 @@ class HikingRecordActivity : BaseDataBindingActivity<ActivityHikingRecordBinding
             runOnUiThread {
                 if(it) SampleToast.createToast(activity,"산행 기록이 저장되었습니다:)")?.show()
                 else SampleToast.createToast(activity,"산행 기록이 저장되지 않았습니다:)")?.show()
+                binding.content.clearFocus()
             }
         }
     }
@@ -134,10 +146,10 @@ class HikingRecordActivity : BaseDataBindingActivity<ActivityHikingRecordBinding
         val writingTime = nowDate()
         val mntnName = viewModel.recordTitle.value.toString()
         hikingDate = viewModel.hikingDate.value.toString()
-        Log.e("recordData", hikingDate.substring(6,10))
-        val record = Record(mntnName,writingTime,hikingDate.substring(6,10),hikingDate,whoHikingWith,hikingImg ?:"",content)
-        Log.e("recordData확인", record.hikingYear.toString())
-        insertRecord(this, record)
+        hikingImgBitmap?.let {
+            val record = Record(mntnName,writingTime,hikingDate.substring(6,10),hikingDate,whoHikingWith,hikingImgBitmap,content)
+            insertRecord(this, record)
+        }
     }
     fun onClickDatePicker(){
         DatePickerBottomsheetFragment.getInstance()
@@ -188,6 +200,21 @@ class HikingRecordActivity : BaseDataBindingActivity<ActivityHikingRecordBinding
             }
         }
     }
+    fun getImageAndPermission( uri: Uri){
+        contentResolver.takePersistableUriPermission(
+            uri,
+            Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION
+        )
+        val bitmap = if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.P){
+            ImageDecoder.decodeBitmap(ImageDecoder.createSource(contentResolver, uri))
+        }else{
+            MediaStore.Images.Media.getBitmap(contentResolver,uri)
+        }
+
+        binding.hikingImg.setImageBitmap(bitmap)
+        hikingImgBitmap = bitmap
+        binding.hikingImg.isVisible = true
+    }
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
@@ -198,9 +225,7 @@ class HikingRecordActivity : BaseDataBindingActivity<ActivityHikingRecordBinding
             2020 ->{
                 val uri = data?.data
                 if(uri != null){
-                    binding.hikingImg.setImageURI(uri)
-                    hikingImg = uri.toString()
-                    binding.hikingImg.isVisible = true
+                    getImageAndPermission(uri)
                 }else{
                     Toast.makeText(this, "사진을 가져오지 못했습니다.", Toast.LENGTH_SHORT).show()
                 }
@@ -208,10 +233,7 @@ class HikingRecordActivity : BaseDataBindingActivity<ActivityHikingRecordBinding
             3030 ->{
                 val uri = data?.data
                 if(uri != null){
-                    Log.e("uri",uri.toString())
-                    binding.hikingImg.setImageURI(uri)
-                    hikingImg = uri.toString()
-                    binding.hikingImg.isVisible = true
+                    getImageAndPermission(uri)
                 }
                 else{
                     Toast.makeText(this, "사진을 가져오지 못했습니다.", Toast.LENGTH_SHORT).show()

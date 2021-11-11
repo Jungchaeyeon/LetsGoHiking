@@ -4,14 +4,17 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import com.jcy.letsgohiking.dao.HistoryDAO
 import com.jcy.letsgohiking.dao.MountainDao
 import com.jcy.letsgohiking.home.record.model.Record
 import com.jcy.letsgohiking.home.record.model.RecordDAO
+import com.jcy.letsgohiking.home.record.model.TypeConverter
 import com.jcy.letsgohiking.home.tab2.model.History
 import com.jcy.letsgohiking.home.tab2.model.MountainItem
 
-@Database(entities = [History::class, MountainItem::class, Record::class],version = 1)
+@Database(entities = [History::class, MountainItem::class, Record::class],version = 2)
+@TypeConverters(TypeConverter::class)
 abstract class AppDatabase : RoomDatabase(){
     abstract fun historyDao() : HistoryDAO
     abstract fun mountainDao(): MountainDao

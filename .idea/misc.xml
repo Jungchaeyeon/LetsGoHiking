@@ -4,7 +4,9 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/LetsGoHiking/app/src/main/res/layout/activity_detail_mountain_info.xml" value="0.1634963768115942" />
+        <entry key="..\:/LetsGoHiking/app/src/main/res/layout/activity_hiking_record.xml" value="0.1" />
         <entry key="..\:/LetsGoHiking/app/src/main/res/layout/bottom_sheet.xml" value="0.1634963768115942" />
+        <entry key="..\:/LetsGoHiking/app/src/main/res/layout/fragment_home.xml" value="0.1" />
         <entry key="..\:/LetsGoHiking/app/src/main/res/layout/viewholder_search_result_item.xml" value="0.1634963768115942" />
       </map>
     </option>
