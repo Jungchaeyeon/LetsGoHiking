@@ -1,8 +1,6 @@
-package com.jcy.letsgohiking.home.tab2
+package com.jcy.letsgohiking.home.tab2.review
 
-import com.google.firebase.database.ktx.database
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.ktx.Firebase
 import com.hdh.base.viewmodel.BaseViewModel
 
 import com.jcy.letsgohiking.home.tab2.model.Review
@@ -24,11 +22,11 @@ class ReviewViewModel(): BaseViewModel() {
         }.start()
 
     }
-    fun deleteMountainReview(mntnName: String, reviewItem: Review, respon: (Boolean) -> Unit ){
+    fun deleteMountainReview(mntnName: String, writer: String, respon: (Boolean) -> Unit ){
         Thread{
-            fireStoreDB.collection(mntnName).document(reviewItem.writer).delete()
+            fireStoreDB.collection(mntnName).document(writer).delete()
                 .addOnCompleteListener {
-                    Log.e("삭제성공", "데이터 베이스에서 리뷰가 삭제되었습니다.")
+                    Log.e("삭제성공", "내 리뷰가 삭제되었습니다.")
                     respon.invoke(true)
                 }
                 .addOnFailureListener {

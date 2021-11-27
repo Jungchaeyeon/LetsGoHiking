@@ -24,7 +24,7 @@
         tools:targetApi="n">
         <activity android:name=".home.record.HikingRecordActivity"
             android:windowSoftInputMode="adjustResize"/>
-        <activity android:name=".home.tab2.MountainReviewActivity" />
+        <activity android:name=".home.tab2.review.MountainReviewActivity" />
         <activity android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />

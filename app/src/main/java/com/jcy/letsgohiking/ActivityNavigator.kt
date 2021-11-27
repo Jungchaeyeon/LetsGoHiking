@@ -8,7 +8,7 @@ import com.jcy.letsgohiking.home.login.LoginActivity
 import com.jcy.letsgohiking.home.record.HikingRecordActivity
 import com.jcy.letsgohiking.home.tab2.DetailMountainInfoActivity
 import com.jcy.letsgohiking.home.tab2.model.MountainItem
-import com.jcy.letsgohiking.home.tab2.MountainReviewActivity
+import com.jcy.letsgohiking.home.tab2.review.MountainReviewActivity
 import java.util.*
 
 /**
