@@ -3,10 +3,16 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/LetsGoHiking/app/src/main/res/drawable/ic_baseline_delete_24.xml" value="0.26979166666666665" />
+        <entry key="..\:/LetsGoHiking/app/src/main/res/drawable/item_my_review_bg.xml" value="0.228125" />
+        <entry key="..\:/LetsGoHiking/app/src/main/res/drawable/item_review_bg.xml" value="0.228125" />
         <entry key="..\:/LetsGoHiking/app/src/main/res/layout/activity_detail_mountain_info.xml" value="0.1634963768115942" />
         <entry key="..\:/LetsGoHiking/app/src/main/res/layout/activity_hiking_record.xml" value="0.1" />
+        <entry key="..\:/LetsGoHiking/app/src/main/res/layout/activity_mountain_review.xml" value="0.25" />
         <entry key="..\:/LetsGoHiking/app/src/main/res/layout/bottom_sheet.xml" value="0.1634963768115942" />
         <entry key="..\:/LetsGoHiking/app/src/main/res/layout/fragment_home.xml" value="0.1" />
+        <entry key="..\:/LetsGoHiking/app/src/main/res/layout/fragment_search.xml" value="0.10309017223910841" />
+        <entry key="..\:/LetsGoHiking/app/src/main/res/layout/item_online_review.xml" value="0.2318840579710145" />
         <entry key="..\:/LetsGoHiking/app/src/main/res/layout/viewholder_search_result_item.xml" value="0.1634963768115942" />
       </map>
     </option>

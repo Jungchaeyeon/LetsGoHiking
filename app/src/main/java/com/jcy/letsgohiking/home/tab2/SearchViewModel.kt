@@ -277,17 +277,25 @@ class SearchViewModel(): BaseViewModel(){
                         val mountain  = MountainItem()
                         val mountainImgUrl = getTagValue("mntnattchimageseq", eElement)
                         val mountainHeight = getTagValue("mntninfohght",eElement).trim()
+                        val mntnDetailInfo = getTagValue("mntninfodtlinfocont", eElement).trim()
+                        val top100reson = getTagValue("hndfmsmtnslctnrson",eElement).trim()
+                        val courseInfo = getTagValue("crcmrsghtnginfoetcdscrt", eElement).trim()
+                        val mntnName = getTagValue("mntnnm",eElement).trim()
 
                         if(mountainImgUrl.isNotEmpty() && mountainHeight.isNotEmpty()){
                             if(mountainImgUrl == "http://www.forest.go.kr/newkfsweb/cmm/fms/getImage.do?fileSn=1&atchFileId="){
                                 continue
                             }
                             mountain.mntnId = getTagValue("mntnid", eElement).toLong()
-                            mountain.mntnName = getTagValue("mntnnm",eElement)
+                            mountain.mntnName = mntnName
                             mountain.mntnHeight = mountainHeight.toInt()
                             mountain.mntnLocation = getTagValue("mntninfopoflc",eElement)
                             mountain.mntnInfo = getTagValue("mntnsbttlinfo",eElement)
                             mountain.mntnImg = mountainImgUrl
+                            mountain.mntnInfo = getTagValue("mntnsbttlinfo",eElement)
+                            mountain.courseInfo = filterString(courseInfo)
+                            mountain.top100reson = filterString(top100reson)
+                            mountain.mntnDetailInfo =filterString(mntnDetailInfo)
 
                             addItem(mountain)
 

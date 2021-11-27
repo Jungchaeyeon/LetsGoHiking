@@ -4,7 +4,7 @@ import com.jcy.letsgohiking.home.login.LoginViewModel
 import com.jcy.letsgohiking.home.record.model.RecordViewModel
 import com.jcy.letsgohiking.home.tab1.HomeViewModel
 import com.jcy.letsgohiking.home.tab2.DetailMountainViewModel
-import com.jcy.letsgohiking.home.tab2.ReviewViewModel
+import com.jcy.letsgohiking.home.tab2.review.ReviewViewModel
 import com.jcy.letsgohiking.home.tab2.SearchViewModel
 import com.jcy.letsgohiking.home.tab5.MoreInfoViewmodel
 import org.koin.android.viewmodel.dsl.viewModel
